@@ -1,0 +1,25 @@
+.quadrados{
+    display: grid;
+    grid-template-columns: repeat(4, 4fr);
+    width: 60%;
+    margin: auto;
+    gap: 5%;
+}
+
+.quadrados button{
+    margin-bottom: 5%;
+    background-color: rgb(68,45,76);
+    border: 1px solid white;
+    color: white;
+    height: calc(3vmax + 20px);
+    transition: all 0.2s ease-in-out;
+}
+
+.quadrados button:hover{
+    cursor: pointer;
+    background-color: rgba(27,13,33,1);
+}
+
+.quadrados p{
+    font-size: calc(0.8vmax + 12px);
+}

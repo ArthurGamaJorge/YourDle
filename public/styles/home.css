@@ -38,6 +38,10 @@ h1{
     padding: 0% 2%;
 }
 
+.config img{
+    width: calc(2vmax + 20px);
+}
+
 #create{
     margin-right: auto;
 }

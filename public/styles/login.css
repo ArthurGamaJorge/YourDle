@@ -18,7 +18,7 @@
 }
 
 .container .box.sgnin {
-    color: rgba(27,13,33,1);
+    color: white;
 }
 
 .container .box{
@@ -34,7 +34,7 @@
 }
 
 .container .box h2{
-    color: rgb(25 8 33);
+    color: white;
     font-size: 1.2em;
     font-weight: 500;
     margin-bottom: 10px;
@@ -67,11 +67,11 @@
 }
 
 .container h2{
-    color: rgba(27,13,33,1);
+    color: white;
 }
 
 .container .box.signin h2{
-    color: rgba(27,13,33,1);
+    color: white;
 }
 
 .formBx{
@@ -128,7 +128,7 @@
 .formBx .form form{
     display: flex;
     flex-direction: column;
-    padding: 0 50px;
+    padding: 0 calc(10vmax - 40px);
     width: 100%;
 }
 
@@ -145,7 +145,7 @@
     margin-bottom: 15px;
     padding: 10px;
     outline: none;
-    font-size: 0.8em;
+    font-size: calc(0.5vmax + 7px);
     border: 1px solid #1b1e1e;
     letter-spacing: 0.1em;
 }
