@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="styles/generico.css">
+    <link rel="stylesheet" href="styles/conexo.css">
+    <link rel="icon" href="Images/icon.png">
+    <title>YourDle</title>
+</head>
+<body onclick="fecharInfo()">
+    <div class="box">
+        <a id="seta" href="index.html"> <img src="Images/seta.png"> </a>
+         <h1>Titulo - Conexo</h1> 
+         <img src="Images/info.png" id="info" onclick="mostrarInfo(); event.stopPropagation()">
+    </div>
+
+    <div class="quadrados">
+        <p>tentativas: <strong>0</strong></p> <p></p> <p></p> <p></p>
+        <button>1</button> <button>2</button> <button>3</button> <button>4</button> 
+        <button>5</button> <button>6</button> <button>7</button> <button>8</button> 
+        <button>9</button> <button>10</button> <button>11</button> <button>12</button>
+        <button>13</button> <button>14</button> <button>15</button> <button>16</button>
+    </div>
+
+    <div id="divInfo" style="display: none" onclick="event.stopPropagation()">
+        <h2><img src="Images/info.png"> &nbsp; Como jogar?</h2> <br>
+        <p>Conexo é um jogo onde há 4 grupos de palavras, cada grupo possui uma caracteristica em comum</p>
+        <P>O objetivo do jogo é acertar todos grupos selecionando os elementos relacionados corretamente</P>
+    </div>
+
+    <script src="scripts/conexo.js"></script>
+</body>
+</html>

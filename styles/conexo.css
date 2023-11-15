@@ -1,0 +1,83 @@
+.aberto{
+    display: block !important;
+}
+
+#divInfo{
+    border: 2px solid rgb(207, 177, 218);
+    width: 40vw;
+    border-radius: 5%;
+    position: absolute; 
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(27,13,33,1);
+    padding: 5% 2%;
+    font-size: calc(1vmax + 10px);
+}
+
+#divInfo img{
+    width: calc(2vmax + 10px);
+}
+
+#divInfo h2{
+    align-items: center;
+    display: flex;
+}
+
+.box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2% 20%;
+    margin-bottom: 5%;
+}
+
+.box h1{
+    font-size: calc(1.5vmax + 15px);
+}
+
+.box img{
+    width: calc(2vmax + 5px);
+}
+
+#seta{
+    margin-right: auto;
+}
+
+#info{
+    margin-left: auto;
+}
+
+#seta:hover, #info:hover{
+    cursor: pointer;
+    background-size: 150%;
+    background-color: rgb(255, 255, 255, 0.5);
+    border-radius: 100%;
+}
+
+
+.quadrados{
+    display: grid;
+    grid-template-columns: repeat(4, 4fr);
+    width: 60%;
+    margin: auto;
+    gap: 5%;
+}
+
+.quadrados button{
+    margin-bottom: 5%;
+    background-color: rgb(68,45,76);
+    border: 1px solid white;
+    color: white;
+    height: calc(3vmax + 20px);
+    transition: all 0.2s ease-in-out;
+}
+
+.quadrados button:hover{
+    cursor: pointer;
+    background-color: rgba(27,13,33,1);
+}
+
+.quadrados p{
+    font-size: calc(0.8vmax + 12px);
+}
