@@ -34,7 +34,7 @@ const readline = require('readline');
 
 app.post("/palavraValida", async(req, res) =>{
     const readLine = readline.createInterface({
-        input: fs.createReadStream('./words.txt'), // Ajuste o caminho do arquivo conforme necessário
+        input: fs.createReadStream(path.join(process.cwd(), './words.txt')), // Ajuste o caminho do arquivo conforme necessário
         output: process.stdout,
         terminal: false,
     });
