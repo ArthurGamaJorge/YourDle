@@ -1,0 +1,308 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+body{
+    background: rgb(68,45,76);
+    background: linear-gradient(90deg, rgb(59, 35, 68) 0%, rgba(27,13,33,1) 100%);
+    color: white;
+}
+
+button{
+    background-color: transparent;
+    border: none;
+}
+
+#logo{
+    position: absolute;
+    right: 0.5%;
+    top: 0.7%;
+    width: calc(4vmax + 5px);
+}
+
+header{
+    margin-top: 2%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h1{
+    text-align: center;
+    font-size: calc(2vmax + 20px);
+}
+
+.content{
+    border: 2px solid white;
+    margin: 10px;
+    height: 80vh;
+}
+
+.config{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px dashed white;
+    height: 10%;
+    align-items: center;
+    padding: 0% 2%;
+}
+
+#create{
+    margin-right: auto;
+}
+
+#filter{
+    margin-left: auto;
+}
+
+#filter:hover{
+    cursor: pointer;
+    filter: brightness(80%);
+}
+
+#filterOptions{
+    border: 1px solid white;
+    position: absolute;
+    z-index: 10;
+    right: 1%;
+    top: 100%;
+    background-color: rgb(59, 35, 68);
+    padding: 1%;
+}
+
+#filterOptions img{
+    width: calc(2vmax + 10px);
+}
+
+.aberto{
+    display: block !important;
+}
+
+/* SEARCH BAR */
+#search{
+    width: 50%;
+    height: 80%;
+}
+
+.input-box {
+    position: relative;
+    height: 76px;
+    max-width: 55%;
+    width: 100%;
+    background: white;
+    margin: 0 20px;
+    border-radius: 8px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  }
+  .input-box i,
+  .input-box .button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .input-box i {
+    left: 20px;
+    font-size: 30px;
+    color: white;
+  }
+  .input-box input {
+    height: 100%;
+    width: 75%;
+    outline: none;
+    font-size: 18px;
+    font-weight: 400;
+    border: none;
+    padding: 0 155px 0 65px;
+    color: black;
+    background-color: transparent;
+  }
+  
+  .input-box .button {
+    right: 20px;
+    font-size: 16px;
+    font-weight: 400;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 6px;
+    background-color: rgb(59, 35, 68);
+    cursor: pointer;
+  }
+  .input-box .button:active {
+    transform: translateY(-50%) scale(0.98);
+  }
+
+  @media screen and (max-width: 550px) {
+    .input-box {
+       height: 66px;
+       margin: 0 8px;
+    }
+    .input-box i {
+       left: 12px;
+       font-size: 25px;
+    }
+    .input-box input {
+       width: 80%;
+       padding: 0 0vmax 0 3vmax;
+       font-size: calc(1vmax + 5px);
+    }
+    .input-box .button {
+       display: none;
+    }
+  }
+
+
+.containerCards{
+    padding-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: calc(1% + 30px);
+    overflow-y: auto;
+    height: 90%;
+}
+
+::-webkit-scrollbar {
+    width: 12px;              
+  }
+  
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.485);        
+  }
+  
+::-webkit-scrollbar-thumb {
+    background-color: rgb(59, 35, 68);   
+    border-radius: 20px;
+  }
+
+
+.card{
+    position: relative;
+    height: calc(12vmax + 80px);
+    border: 1px solid white;
+    width: calc(10vmax + 50px);
+    border-radius: 10%;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.interações{
+    display: flex;
+    justify-content: center;
+    padding: 5%;
+    width: 100%;
+    gap: 15px;
+    position: absolute;
+    bottom: 1%;
+}
+
+
+.curtida{
+    width: calc(1vmax + 5px);
+}
+
+#like:hover, #create:hover{
+    cursor: pointer;
+    filter: invert(26%) sepia(99%) saturate(1236%) hue-rotate(92deg) brightness(99%) contrast(107%);
+}
+
+#dislike:hover{
+    cursor: pointer;
+    filter: invert(23%) sepia(84%) saturate(10000%) hue-rotate(359deg) brightness(91%) contrast(137%);
+}
+
+#data{
+    margin-left: auto;
+    align-self: center;
+}
+
+/* BOXES */
+
+
+#box{
+    display: none;
+    justify-content: center;
+    background-color: rgb(68,45,76);
+    position: fixed;
+    width: calc(35vw + 50px);
+    overflow-y: auto;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    border-radius: 20px;
+    z-index: 100;
+    color: var(--light-shades);
+    padding: 2%;
+    border: 1px solid white;
+}
+
+@media (max-width: 800px) {
+    #box{
+        width: 80vw;
+    }
+}
+
+#box *{
+    margin: 15px;
+    padding: 5px;
+}
+
+#box #submitInput{
+    background-color: rgba(27,13,33,1);
+    border-radius: 10px;
+    border: 0px solid;
+    width: 180px;
+    height: 50px;
+    font-size: 15px;
+    justify-self: center;
+    transition:  all 0.2s ease-in-out;
+}
+
+#submitInput:hover{
+    scale: 1.05;
+}
+
+#submitInput{
+    color: white;
+    cursor: pointer;
+}
+
+#box #emailInput, #passwordInput{
+    border-radius: 5px;
+    border: 0px solid;
+}
+
+#box #emailInput:invalid, #passwordInput:invalid{
+    border: 2px solid red;
+}
+
+#box #emailInput:valid, #passwordInput:valid{
+    border: 2px solid green;
+}
+
+#exitLogin{
+    color: white;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: 0px solid;
+    background-color: transparent;
+    width: 30px;
+    height: 30px;
+    font-weight: bolder;
+    transition: all 0.2s ease-in-out;
+}
+
+#exitLogin:hover{
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.resize-animation-stopper * {
+    animation: none !important;
+    transition: none !important;
+  }

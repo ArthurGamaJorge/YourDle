@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="styles/login.css">
+    <link rel="stylesheet" href="styles/home.css">
+    <link rel="icon" href="Images/icon.png">
+    <title>YourDle</title>
+</head>
+<body onclick="fecharBox()">
+    <header>
+        <img src="Images/icon.png" id="logo">
+        <h1> YourDle </h1>
+    </header>
+
+    <section class="content">
+        <div class="config">
+
+            <button id="create" onclick="criar(); event.stopPropagation()"> <img src="Images/create.png"> </button>
+
+            <div class="input-box" id="search">
+                <i class="uil uil-search"></i>
+                <input type="text" placeholder="Procure aqui..." id="searchContent"/>
+                <button class="button" onclick="search()">Search</button>
+              </div>
+
+            <button id="filter" onclick="filtrar()"> <img src="Images/filter.png"> </button>
+            <div id="filterOptions" style="display: none">
+                <p> <img src="Images/relogio.png"> data </p>
+                <p> <img src="Images/like.png"> curtidas </p>
+            </div>
+
+        </div>
+
+
+        <div class="containerCards">
+
+            <div class="card">
+                <h2>Conexo QSMP</h2>
+                <p>Nome do usuário</p>
+                <div class="interações">
+                    <p id="like"> <img src=Images/like.png class="curtida"> 0 </p>
+                    <p id="dislike"> <img src=Images/dislike.png class="curtida"> 0 </p>
+                    <p id="data">14/11/23</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Wordle QSMP</h2>
+                <p>Nome do usuário</p>
+                <div class="interações">
+                    <p id="like"> <img src=Images/like.png class="curtida"> 0 </p>
+                    <p id="dislike"> <img src=Images/dislike.png class="curtida"> 0 </p>
+                    <p id="data">14/11/23</p>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <div class="container" id="boxLogin" onclick="event.stopPropagation()">
+        <div class="box signin">
+            <h2>Já tem uma conta?</h2>
+            <button class="signinBtn">Entrar</button>
+        </div>
+        <div class="box signup">
+            <h2>Ainda não tem uma conta?</h2>
+            <button class="signupBtn">Registrar</button>
+        </div>
+        <div class="formBx">
+            <div class="form signinform">
+                <form>
+                    <h3>Entrar</h3>
+                    <input id='usuariologin' type="text" placeholder="Username">
+                    <input id='senhalogin' type="password" placeholder="Senha">
+                    <input type="button" value="Entrar" onclick="loginUsuario()" id="Entrar">
+                </form>
+            </div>
+
+            <div class="form signupform">
+                <form>
+                    <h3>Registrar</h3>
+                    <input id="id" type="text" placeholder="Username">
+                    <input id="senha" type="password" placeholder="Senha">
+                    <input id="senhaConfirmar" type="password" placeholder="Confirmar Senha">
+                    <input type='button' value="Registrar" onclick="postUsuario()" id="Registrar">
+                </form>
+            </div>
+        </div>
+    </div>
+    
+<script src="scripts/home.js"></script>
+</body>
+</html>
