@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Wordle Clone!</title>
+    <title>Wordle</title>
 
     <script src="scripts/wordle.js"></script>
 
@@ -18,7 +18,7 @@
   </head>
   <body onclick="fecharInfo()">
     <div class="box"> 
-        <a id="seta" href="index.html"> <img src="Images/seta.png"> </a>
+        <a id="seta" href="./"> <img src="Images/seta.png"> </a>
          <h1>Titulo - Wordle</h1> 
          <img src="Images/info.png" id="info" onclick="mostrarInfo(); event.stopPropagation()">
     </div>
@@ -73,8 +73,10 @@
 
     <div id="divInfo" style="display: none" onclick="event.stopPropagation()">
         <h2><img src="Images/info.png"> &nbsp; Como jogar?</h2> <br>
-        <p>Conexo é um jogo onde há 4 grupos de palavras, cada grupo possui uma caracteristica em comum</p>
-        <p>O objetivo do jogo é acertar todos grupos selecionando os elementos relacionados corretamente</p>
+        <p>Wordle é um jogo onde há você deve acertar uma palavra de 5 letras, Ao inserir uma palavra, o jogo dará algumas informações</p>
+        <p>Caso a letra fique verde, ela está certa e no local certo</p>
+        <p>Caso a letra fique amarela, ela está na palavra mas em outro local</p>
+        <p>Caso a letra fique cinza, ela não está na palavra e está em outro local</p>
     </div>
 
     <script src="scripts/generico.js"></script>
