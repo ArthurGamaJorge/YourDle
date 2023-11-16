@@ -50,10 +50,21 @@
     }
   }
 
+  @keyframes aparecer {
+    from{
+      scale: 0
+    }
+    
+    to{
+      scale: 1;
+    }
+  }
+
 .result{
     grid-column: 1/-1;
     border: 1px solid white;
     text-align: center;
+    animation: 0.25s aparecer ease-in-out;
 }
 
 .vermelho{

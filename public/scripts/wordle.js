@@ -78,15 +78,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
         contadorPalavrasAdivinhadas += 1;
 
-        if (palavraAtual === palavra) {
-          window.alert("Parabéns!");
-        }
-
         if (palavrasAdivinhadas.length === 6) {
           window.alert(`Desculpe, você não tem mais tentativas! A palavra é ${palavra}.`);
         }
 
         palavrasAdivinhadas.push([]);
+
+        if (palavraAtual === palavra) {
+          window.alert("Parabéns!");
+        }
+        
       } 
       else {
         alert("Palavra inválida");

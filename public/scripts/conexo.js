@@ -43,7 +43,7 @@ cliquesPermitidos = true
 
 let selecionar = async botão =>{
   botão = document.getElementById(botão)
-
+  opção = 0
   if(!cliquesPermitidos){
     return
   }
@@ -64,32 +64,36 @@ let selecionar = async botão =>{
     if(JSON.stringify(respostaOrdenada) == JSON.stringify(verde.itens)){
       await resolvido("verde", verde)
       verde.itens = []
-      return
     } 
 
     if(JSON.stringify(respostaOrdenada) == JSON.stringify(azul.itens)){
       await resolvido("azul", azul)
       azul.itens = []
-      return
     } 
 
     if(JSON.stringify(respostaOrdenada) == JSON.stringify(amarelo.itens)){
       await resolvido("amarelo", amarelo)
       amarelo.itens = []
-      return
     } 
 
     if(JSON.stringify(respostaOrdenada) == JSON.stringify(vermelho.itens)){
       await resolvido("vermelho", vermelho)
       vermelho.itens = []
-      return
     } 
-    await resolvido("falso", [])
-    cliquesPermitidos = true
+
+    if(opção == 0){
+      await resolvido("falso", [])
+      cliquesPermitidos = true
+    }
+
+    if(verde.itens.length == 0 && azul.itens.length == 0 && amarelo.itens.length == 0 && vermelho.itens.length == 0){
+      alert("Parabéns você ganhou")
+    }
   }
 }
 
 let resolvido = async(cor, array) => {
+  opção = 1
   divQuadrados = document.querySelector('.quadrados')
   botões = document.querySelectorAll('.button')
 
@@ -120,10 +124,12 @@ let resolvido = async(cor, array) => {
     <p> ${array.itens[0]} ${array.itens[1]} ${array.itens[2]} ${array.itens[3]} </p>
     </div>
   `
+  await sleep(250)
   }
   document.getElementById('quantasTentativas').textContent = Number(document.getElementById('quantasTentativas').textContent) + 1
   seleçãoAtual = []
   cliquesPermitidos = true
+
 }
 
 const shuffle = (array) => { 

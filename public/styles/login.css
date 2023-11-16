@@ -68,6 +68,7 @@
 
 .container h2{
     color: white;
+    text-align: center;
 }
 
 .container .box.signin h2{
@@ -178,7 +179,7 @@
 
     .formBx{
         left: 10px;
-        width: 50vw;
+        width: 48vw;
         height: 45vh;
     }
     

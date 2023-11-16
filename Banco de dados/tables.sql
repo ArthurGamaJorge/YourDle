@@ -2,7 +2,7 @@ CREATE SCHEMA YourDle
 
 CREATE TABLE YourDle.Usuario(
 	idUsuario INT PRIMARY KEY IDENTITY(1,1),
-	username VARCHAR(80) NOT NULL,
+	username VARCHAR(80) NOT NULL UNIQUE,
 	senha VARCHAR(50) NOT NULL
 )
 

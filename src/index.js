@@ -1,3 +1,6 @@
+const { PrismaClient } = require('@prisma/client')
+const prisma = new PrismaClient()
+
 const express = require('express')
 const app = express()
 
@@ -30,6 +33,8 @@ app.get("/wordle", function(req, res){
     res.sendFile(path.join(__dirname, '../public/wordle.html'));
 })
 
+savedIdUsuario = null
+
 const fs = require('fs');
 const readline = require('readline');
 
@@ -54,11 +59,37 @@ app.post("/palavraValida", async(req, res) =>{
 
 
   app.post("/registrar", async(req, res) =>{
-    
+    if(req.body.senha != req.body.confirmarSenha){
+        res.json({resposta: "Senhas não coincidem"})
+        return
+    }
+    if(req.body.username.length > 80){
+        res.json({resposta: "username deve ter no máximo 80 caractéres"})
+        return
+    }
+    if(req.body.senha.length > 50){
+        res.json({resposta: "senha deve ter no máximo 50 caractéres"})
+        return
+    }
+    try{
+        await prisma.$queryRaw
+        `insert into YourDle.Usuario values(${req.body.username}, ${req.body.senha})`
+        res.json({resposta: "sucesso"})
+    } catch{
+        res.json({resposta: "Esse username já está sendo utilizado por outro usuário"})
+    }
   })
 
   app.post("/logar", async(req, res) =>{
-    
+    const usuario = await prisma.$queryRaw
+    `select * from YourDle.Usuario where username = ${req.body.username} and senha = ${req.body.senha}`
+
+    if(usuario.length != 0){
+        savedIdUsuario = usuario[0].idUsuario
+        res.json({resposta: "sucesso"})
+    } else{
+        res.json({resposta: "fracasso"})
+    }
   })
 
   app.post("/publicar", async(req, res) =>{
