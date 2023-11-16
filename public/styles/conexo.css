@@ -1,9 +1,84 @@
+.Selecionado{
+    background-color: rgb(48, 22, 59) !important;
+}
+
+.tremido{
+    border-color: red !important;
+    animation: tremer 0.55s ease-in-out;
+}
+
+.sucedido{
+    animation: sucesso 2s ease-in-out;
+}
+
+@keyframes sucesso {
+    10% {
+      scale: 1.1
+    }
+    
+    30%{
+      scale: 1
+    }
+  
+    50%{
+        scale: 1.1
+    }
+  
+    70%{
+      scale: 1
+    }
+    100%{
+        scale: 0
+    }
+  }
+
+@keyframes tremer {
+    10%, 90% {
+      transform: translate3d(-1px, 0, 0);
+    }
+    
+    20%, 80% {
+      transform: translate3d(2px, 0, 0);
+    }
+  
+    30%, 50%, 70% {
+      transform: translate3d(-4px, 0, 0);
+    }
+  
+    40%, 60% {
+      transform: translate3d(4px, 0, 0);
+    }
+  }
+
+.result{
+    grid-column: 1/-1;
+    border: 1px solid white;
+    text-align: center;
+}
+
+.vermelho{
+    background-color: red !important;
+}
+
+.azul{
+    background-color: blue !important;
+}
+
+.verde{
+    background-color: green !important;
+}
+
+.amarelo{
+    background-color: rgb(234, 175, 38) !important;
+}
+
 .quadrados{
     display: grid;
     grid-template-columns: repeat(4, 4fr);
     width: 60%;
     margin: auto;
     gap: 5%;
+    transition: 0.55s ease-in-out;
 }
 
 .quadrados button{
@@ -12,12 +87,17 @@
     border: 1px solid white;
     color: white;
     height: calc(3vmax + 20px);
-    transition: all 0.2s ease-in-out;
+    transition: all 0.15s ease-in-out;
+    font-size: calc(1vmax + 10px);
 }
 
 .quadrados button:hover{
     cursor: pointer;
     background-color: rgba(27,13,33,1);
+}
+
+.quadrados button:active{
+    scale: 0.9
 }
 
 .quadrados p{

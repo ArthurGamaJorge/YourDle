@@ -293,8 +293,3 @@ h1{
     cursor: pointer;
     font-size: 15px;
 }
-
-.resize-animation-stopper * {
-    animation: none !important;
-    transition: none !important;
-  }

@@ -20,13 +20,13 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 // COLOCAR ARQUIVOS HTML
 app.get("/", function(req, res){
-    res.sendFile(path.join(__dirname, '../index.html'));
+    res.sendFile(path.join(__dirname, '../public/index.html'));
 })
-app.get("/conexo.html", function(req, res){
-    res.sendFile(path.join(__dirname, '../conexo.html'));
+app.get("/conexo", function(req, res){
+    res.sendFile(path.join(__dirname, '../public/conexo.html'));
 })
-app.get("/wordle.html", function(req, res){
-    res.sendFile(path.join(__dirname, '../wordle.html'));
+app.get("/wordle", function(req, res){
+    res.sendFile(path.join(__dirname, '../public/wordle.html'));
 })
 
 const fs = require('fs');
@@ -49,6 +49,19 @@ app.post("/palavraValida", async(req, res) =>{
     }
 
     res.json({resposta: found});
+  })
+
+
+  app.post("/registrar", async(req, res) =>{
+    
+  })
+
+  app.post("/logar", async(req, res) =>{
+    
+  })
+
+  app.post("/publicar", async(req, res) =>{
+    
   })
 
     

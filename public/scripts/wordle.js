@@ -87,7 +87,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         palavrasAdivinhadas.push([]);
-      } else {
+      } 
+      else {
         alert("Palavra inválida");
       }
     });
@@ -107,6 +108,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function deletarLetra() {
     const arrayPalavraAtual = getArrayPalavraAtual();
+    if(arrayPalavraAtual.length == 0){
+      return
+    }
+
     const letraRemovida = arrayPalavraAtual.pop();
 
     palavrasAdivinhadas[palavrasAdivinhadas.length - 1] = arrayPalavraAtual;

@@ -17,11 +17,15 @@
     </div>
 
     <div class="quadrados">
-        <p>tentativas: <strong>0</strong></p> <p></p> <p></p> <p></p>
-        <button>1</button> <button>2</button> <button>3</button> <button>4</button> 
-        <button>5</button> <button>6</button> <button>7</button> <button>8</button> 
-        <button>9</button> <button>10</button> <button>11</button> <button>12</button>
-        <button>13</button> <button>14</button> <button>15</button> <button>16</button>
+        <p>tentativas: <strong id="quantasTentativas">0</strong></p> <p></p> <p></p> <p></p>
+        <button id="1" class="button" onclick="selecionar(1)">1</button> <button id="2" class="button" onclick="selecionar(2)">2</button>
+        <button id="3" class="button" onclick="selecionar(3)">3</button> <button id="4" class="button" onclick="selecionar(4)">4</button>
+        <button id="5" class="button" onclick="selecionar(5)">5</button> <button id="6" class="button" onclick="selecionar(6)">6</button>
+        <button id="7" class="button" onclick="selecionar(7)">7</button> <button id="8" class="button" onclick="selecionar(8)">8</button>
+        <button id="9" class="button" onclick="selecionar(9)">9</button> <button id="10" class="button" onclick="selecionar(10)">10</button>
+        <button id="11" class="button" onclick="selecionar(11)">11</button> <button id="12" class="button" onclick="selecionar(12)">12</button>
+        <button id="13" class="button" onclick="selecionar(13)">13</button> <button id="14" class="button" onclick="selecionar(14)">14</button>
+        <button id="15" class="button" onclick="selecionar(15)">15</button> <button id="16" class="button" onclick="selecionar(16)">16</button>
     </div>
 
     <div id="divInfo" style="display: none" onclick="event.stopPropagation()">
@@ -30,6 +34,7 @@
         <p>O objetivo do jogo é acertar todos grupos selecionando os elementos relacionados corretamente</p>
     </div>
 
+    <script src="scripts/generico.js"></script>
     <script src="scripts/conexo.js"></script>
 </body>
 </html>
