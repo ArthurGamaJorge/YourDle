@@ -169,6 +169,7 @@
 #Entrar, #Registrar{
     width: 50%;
     margin: auto;
+    cursor: pointer;
 }
 
 @media (max-width: 800px) {
