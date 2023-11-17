@@ -86,14 +86,26 @@ app.post("/palavraValida", async(req, res) =>{
 
     if(usuario.length != 0){
         savedIdUsuario = usuario[0].idUsuario
-        res.json({resposta: "sucesso"})
+        res.json({resposta: "sucesso", info: usuario[0]})
     } else{
         res.json({resposta: "fracasso"})
     }
   })
 
   app.post("/publicar", async(req, res) =>{
-    
+    if(savedIdUsuario == req.body.idUsuario){
+        if(req.body.tipo == "Wordle"){
+            if(req.body.palavra.length != 5){
+                res.json({resposta: "A palavra deve ter exatamente 5 letras"})
+                return
+            }
+            await prisma.$queryRaw
+            `exec YourDle.spInserirWordle ${req.body.palavra}, ${req.body.idUsuario}`
+            res.json({resposta: "sucesso"})
+        } else{
+            console.log("to-do")
+        }
+    }
   })
 
     

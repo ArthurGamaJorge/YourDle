@@ -293,3 +293,77 @@ h1{
     cursor: pointer;
     font-size: 15px;
 }
+
+#divCriarPost{
+    position: fixed; 
+    justify-content: center;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid white;
+    background-color: rgb(68,45,76);
+    padding: 2% 5%;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+#divCriarPost input, select, option{
+    background-color: rgb(59, 35, 68);
+    color: white
+}
+
+#divCriarPost input{
+    border:none;
+    outline:none;
+    vertical-align:middle;
+    border-radius:22px;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 2%;
+}
+
+#VerdeDesc, #AzulDesc, #VermelhoDesc, #AmareloDesc{
+    border-radius: 0px !important;
+}
+
+.Conexo input{
+    width: 40%;
+}
+
+
+@media (max-width: 800px) {
+.Conexo{
+    width: 80vw;
+}
+.Conexo input{
+    width: 40%;
+}
+}
+
+#divCriarPost button{
+    color: white;
+    background-color: rgb(59, 35, 68);
+    cursor: pointer;
+    padding: 2%;
+    border: 1px solid white;
+}
+
+#setaEsquerda, #setaDireita{
+    border: none !important;
+    padding: 0 !important;
+    background-color: transparent !important;
+    cursor: pointer;
+    width: calc(1vmax + 5px);
+    position: absolute;
+    bottom: 5%;
+    right: 2%;
+}
+
+#divCriarPost img{
+    width: calc(1vmax + 5px);
+}
+
+#setaEsquerda{
+    left: 2%;
+}

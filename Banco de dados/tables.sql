@@ -30,3 +30,11 @@ CREATE TABLE YourDle.Wordle(
 	CONSTRAINT fk_UsuarioWordle FOREIGN KEY(idUsuario)
 	REFERENCES YourDle.Usuario(idUsuario)
 )
+
+CREATE OR ALTER PROCEDURE YourDle.spInserirWordle
+    @palavra AS VARCHAR(5),
+    @idUsuario AS INT
+AS
+BEGIN
+    INSERT INTO YourDle.Wordle VALUES(@palavra, GETDATE(), 0, 0, @idUsuario);
+END;

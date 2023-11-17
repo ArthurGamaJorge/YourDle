@@ -92,6 +92,52 @@
             </div>
         </div>
     </div>
+
+    <section id="divCriarPost" style="display: none" onclick="event.stopPropagation()">
+        <h2> Criar jogo </h2> <br> 
+        <input placeholder="titulo do jogo" id="titulo"> <br> <br>
+        <select id="tiposDeJogo">
+            <option value="Conexo">Conexo</option> 
+            <option value="Wordle">Wordle</option>
+        </select> <br>
+        <button onclick="mudarSeção('avançar')" id="setaDireita"><img src="Images/setaDireita.png"></button>
+    </section>
+
+    <section id="divCriarPost" class="Wordle" style="display: none" onclick="event.stopPropagation()">
+        <button onclick="mudarSeção('retornar')" id="setaEsquerda"><img src="Images/seta.png"></button>
+        <input id="palavraWordle" placeholder="Palavra" maxlength="5"> <br>
+        <button onclick="publicar('Wordle')">Publicar</button>
+    </section>
+
+    <section id="divCriarPost" class="Conexo" style="display: none" onclick="event.stopPropagation()">
+        <button onclick="mudarSeção('retornar')" id="setaEsquerda"><img src="Images/seta.png"></button>
+        <button onclick="mudarSeção('avançarConexo2')" id="setaDireita"><img src="Images/setaDireita.png"></button>
+
+        <h2>Verde</h2>
+        <input placeholder="Primeira palavra" id="Verde1"> <input placeholder="Segunda palavra" id="Verde2"> <input placeholder="Terceira palavra" id="Verde3"> <input placeholder="Quarta palavra" id="Verde4"> <br>
+        <input placeholder="Descrição" id="VerdeDesc"> <br><br>
+
+        <h2>Amarelo</h2>
+        <input placeholder="Primeira palavra" id="Amarelo1"> <input placeholder="Segunda palavra" id="Amarelo2"> <input placeholder="Terceira palavra" id="Amarelo3"> <input placeholder="Quarta palavra" id="Amarelo4"><br>
+        <input placeholder="Descrição" id="AmareloDesc"> <br><br>
+
+    </section>
+
+    <section id="divCriarPost" class="Conexo Conexo2" style="display: none" onclick="event.stopPropagation()">
+        <button onclick="mudarSeção('retornarConexo2')" id="setaEsquerda"><img src="Images/seta.png"></button>
+
+        <h2>Azul</h2>
+        <input placeholder="Primeira palavra" id="Azul1"> <input placeholder="Segunda palavra" id="Azul2"> <input placeholder="Terceira palavra" id="Azul3"> <input placeholder="Quarta palavra" id="Azul4"><br>
+        <input placeholder="Descrição" id="AzulDesc"> <br><br>
+
+        <h2>Vermelho</h2>
+        <input placeholder="Primeira palavra" id="Vermelho1"> <input placeholder="Segunda palavra" id="Vermelho2"> <input placeholder="Terceira palavra" id="Vermelho3"> <input placeholder="Quarta palavra" id="Vermelho4"><br>
+        <input placeholder="Descrição" id="VermelhoDesc"> <br><br><br>
+
+        <button onclick="publicar('Conexo')">Publicar</button> <br>
+    </section>
+
+
     
     <script src="scripts/generico.js"></script>
     <script src="scripts/home.js"></script>

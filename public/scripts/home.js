@@ -12,11 +12,18 @@ let filtrar = () =>{
 
 let fecharBox = () =>{
     document.querySelector('#boxLogin').classList.remove("open")
+    document.getElementById('divCriarPost').classList.remove("aberto")
 }
+
+Jogo = "Wordle"
 
 let criar = () =>{
     if(loginInformations == null){
         document.querySelector('#boxLogin').classList.toggle("open")
+    } else{
+        document.getElementById('divCriarPost').classList.toggle("aberto") 
+        document.querySelector('.Conexo2').classList.remove("aberto")
+        document.querySelector(`.${Jogo}`).classList.remove('aberto')
     }
 }
 
@@ -52,6 +59,8 @@ let registrar = () =>{
         } else{
             alert("Registro feito com sucesso")
             localStorage.setItem("login", JSON.stringify(infoRegistro))
+            fecharBox()
+            document.getElementById('divCriarPost').classList.toggle("aberto")
         }
     })
 }
@@ -76,8 +85,57 @@ let logar = infoLogin =>{
         if(data.resposta != "sucesso"){
             alert("Informações incorretas")
         } else{
-            localStorage.setItem("login", JSON.stringify(infoLogin))
+            dataInfo = data.info
+            localStorage.setItem("login", JSON.stringify(dataInfo))
             fecharBox()
+        }
+    })
+}
+
+let mudarSeção = ação =>{
+    if(ação == "avançar"){
+        titulo = document.getElementById('titulo').value
+        if(titulo == ""){
+            alert("Adicione um título primeiro")
+            return
+        }
+    
+        tiposDeJogos = document.getElementById('tiposDeJogo')
+        Jogo = tiposDeJogos.options[tiposDeJogos.selectedIndex].value;
+        document.getElementById('divCriarPost').classList.toggle("aberto")
+        document.querySelector(`.${Jogo}`).classList.add('aberto')
+    } else{
+        if(ação == "avançarConexo2"){
+            document.querySelector('.Conexo2').classList.toggle("aberto")
+        }
+        if(ação == "retornarConexo2"){
+            document.querySelector('.Conexo2').classList.toggle("aberto")
+        }
+
+        document.querySelector(`.${Jogo}`).classList.toggle('aberto')
+        document.getElementById('divCriarPost').classList.toggle("aberto")
+    }
+}
+
+let publicar = Tipo =>{
+    if(Tipo == "Conexo"){
+
+    } else{
+        palavra = document.getElementById('palavraWordle').value
+        infoPost = {idUsuario: loginInformations.idUsuario, tipo: "Wordle", palavra: palavra}
+    }
+    fetch("/publicar", {
+        method:"POST",
+        headers:{
+            "Content-type": "application/json"
+        },
+        body:JSON.stringify(infoPost)
+    }).then(response => response.json()) // Converte a resposta em um objeto JavaScript
+      .then(data => {
+        if(data.resposta != "sucesso"){
+            alert(data.resposta)
+        } else{
+            location.reload()
         }
     })
 }
