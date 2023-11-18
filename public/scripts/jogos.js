@@ -2,7 +2,7 @@ let search = () =>{
 
     informações = {content: 'to-do', tópicos: 'to-do', temParametroBusca: 'to-do'}
 
-    fetch("/searchposts", {
+    fetch("/searchWordle", {
         method:"POST",
         headers:{"Content-type": "application/json"},
         body:JSON.stringify(informações)
@@ -16,27 +16,19 @@ let search = () =>{
         }
 
         for(var i = 0; i < data.length; i++){
-            try{ 
-                adicionarJogo(
-                    data[i].idWordle,
-                    data[i].tituloWordle,
-                    data[i].curtidaWordle,
-                    data[i].descurtidaWordle,
-                    data[i].dataWordle,
-                    data[i].username,
-                    "Wordle"
-                )
-            } catch{ 
-                adicionarJogo(
-                    data[i].idConexo,
-                    data[i].tituloConexo,
-                    data[i].curtidaConexo,
-                    data[i].descurtidaConexo,
-                    data[i].dataConexo,
-                    data[i].username,
-                    "Conexo"
-                )
-            }
+                adicionarJogo(data[i].idWordle, data[i].tituloWordle, data[i].curtidaWordle, data[i].descurtidaWordle, data[i].dataWordle, data[i].username,"wordle")
+        }
+    })
+
+    fetch("/searchConexo", {
+        method:"POST",
+        headers:{"Content-type": "application/json"},
+        body:JSON.stringify(informações)
+    })
+    .then(response => response.json()) // Converte a resposta em um objeto JavaScript
+    .then(data => {
+        for(var i = 0; i < data.length; i++){
+            adicionarJogo(data[i].idConexo, data[i].tituloConexo, data[i].curtidaConexo, data[i].descurtidaConexo, data[i].dataConexo, data[i].username,"conexo")
         }
     })
 }
@@ -47,8 +39,9 @@ function adicionarJogo(idJogo,titulo,curtidas,descurtidas,data,username, tipo) {
     conteudo = ''
     conteudo += `
     <div class="card ${idJogo} ${tipo}">
-        <h2>${titulo}</h2>
+        <h2><a href="${tipo}/${idJogo}">${titulo}</a></h2>
         <p>${username}</p>
+        <div id="capa"></div>
         <div class="interações">
             <button id="like"> <img src=Images/like.png class="curtida">  ${curtidas} </button>
             <button id="dislike"> <img src=Images/dislike.png class="curtida"> ${descurtidas} </button>

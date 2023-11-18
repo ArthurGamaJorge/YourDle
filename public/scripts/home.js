@@ -125,7 +125,12 @@ let mudarSeção = ação =>{
 let publicar = Tipo =>{
     titulo = document.getElementById('titulo').value
     if(Tipo == "Conexo"){
-
+        Verde = [document.getElementById('Verde1').value, document.getElementById('Verde2').value, document.getElementById('Verde3').value, document.getElementById('Verde4').value].sort() + "," + [document.getElementById('VerdeDesc').value]
+        Amarelo = [document.getElementById('Amarelo1').value, document.getElementById('Amarelo2').value, document.getElementById('Amarelo3').value, document.getElementById('Amarelo4').value].sort() + "," + [ document.getElementById('AmareloDesc').value]
+        Azul = [document.getElementById('Azul1').value, document.getElementById('Azul2').value, document.getElementById('Azul3').value, document.getElementById('Azul4').value].sort() + "," + [ document.getElementById('AzulDesc').value]
+        Vermelho = [document.getElementById('Vermelho1').value, document.getElementById('Vermelho2').value, document.getElementById('Vermelho3').value, document.getElementById('Vermelho4').value].sort() + "," + [document.getElementById('VermelhoDesc').value]
+        infoPost = {idUsuario: loginInformations.idUsuario, tipo: "Conexo", verde: Verde, amarelo: Amarelo, azul: Azul, vermelho: Vermelho, titulo: titulo}
+    
     } else{
         palavra = document.getElementById('palavraWordle').value
         infoPost = {idUsuario: loginInformations.idUsuario, tipo: "Wordle", palavra: palavra, titulo: titulo}

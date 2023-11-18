@@ -42,21 +42,41 @@ BEGIN
     INSERT INTO YourDle.Wordle VALUES(@titulo, @palavra, GETDATE(), 0, 0, @idUsuario);
 END
 
+CREATE OR ALTER PROCEDURE YourDle.spInserirConexo
+	@titulo AS VARCHAR(50),
+    @verde AS VARCHAR(500),
+	@azul AS VARCHAR(500),
+	@amarelo AS VARCHAR(500),
+	@vermelho AS VARCHAR(500),
+    @idUsuario AS INT
+AS
+BEGIN
+    INSERT INTO YourDle.Conexo VALUES(@titulo, @verde, @azul, @amarelo, @vermelho, GETDATE(), 0, 0, @idUsuario);
+END
 
-CREATE OR ALTER VIEW YourDle.v_jogos AS
+
+CREATE OR ALTER VIEW YourDle.v_Wordle AS
 SELECT
     W.idWordle,
     W.titulo AS 'tituloWordle',
     W.curtida AS 'curtidaWordle',
     W.descurtida AS 'descurtidaWordle',
-	W.dataCriado AS 'dataWordle',
+	FORMAT(W.dataCriado, 'dd/MM/yy') AS 'dataWordle',
+    U.username
+FROM
+    YourDle.Wordle W
+JOIN YourDle.Usuario U ON W.idUsuario = U.idUsuario
+
+CREATE OR ALTER VIEW YourDle.v_Conexo AS
+SELECT
     U.username,
     C.idConexo,
     C.titulo AS 'tituloConexo',
     C.curtida AS 'curtidaConexo',
     C.descurtida AS 'descurtidaConexo',
-	C.dataCriado AS 'dataConexo'
+	FORMAT(C.dataCriado, 'dd/MM/yy') AS 'dataConexo'
 FROM
-    YourDle.Wordle W
-JOIN YourDle.Usuario U ON W.idUsuario = U.idUsuario
-LEFT JOIN YourDle.Conexo C ON U.idUsuario = C.idUsuario;
+    YourDle.Conexo C
+JOIN YourDle.Usuario U ON C.idUsuario = U.idUsuario
+
+select * from YourDle.Conexo

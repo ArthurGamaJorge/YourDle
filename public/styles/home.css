@@ -373,6 +373,19 @@ h1{
     width: calc(1vmax + 10px);
 }
 
+#capa{
+    height: 65%;
+    width: 70%;
+    margin: auto;
+    text-align: center;
+}
+
+.wordle #capa{
+    background-image: url('../Images/wordle.png') !important;
+    background-size: cover;
+    background-position: center center;
+}
+
 .DivSair{
     text-align: center; 
     padding: 2% 4% !important;

@@ -1,10 +1,25 @@
 document.addEventListener("DOMContentLoaded", () => {
+
+  palavra = 'teste'
+  
+  infoWordle = {idWordle: (window.location.href.split("/"))[4]}
+
+  fetch("/pegarPalavra", {
+    method:"POST",
+    headers:{
+        "Content-type": "application/json"
+    },
+    body:JSON.stringify(infoWordle)
+}).then(response => response.json()) // Converte a resposta em um objeto JavaScript
+  .then(data => {
+    palavra = data[0].palavra.toLowerCase()
+  })
+
   criarQuadrados();
 
   let palavrasAdivinhadas = [[]];
   let espacoDisponivel = 1;
 
-  let palavra = "calvo";
   arrayResposta = [palavra[0], palavra[1], palavra[2], palavra[3], palavra[4]]
   let contadorPalavrasAdivinhadas = 0;
 
@@ -68,16 +83,16 @@ const itemCounter = (value, index) => {
 
     const palavraAtual = arrayPalavraAtual.join("");
 
-    //fetch("/palavraValida", {
-    //  method: "POST",
-    //  headers: {
-    //    "Content-type": "application/json"
-    //  },
-    //  body: JSON.stringify({ palavra: palavraAtual })
-    //})
-    //.then(response => response.json())
-    //.then(data => {
-    //  if (data.resposta === true) {
+    fetch("/palavraValida", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify({ palavra: palavraAtual })
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.resposta === true) {
         const primeiroIdLetra = contadorPalavrasAdivinhadas * 5 + 1;
         const intervalo = 200;
 
@@ -103,17 +118,16 @@ const itemCounter = (value, index) => {
         }
 
         palavrasAdivinhadas.push([]);
-
-        if (palavraAtual === palavra) {
-          window.alert("Parabéns!");
-        }
         
       } 
-    //  else {
-    //    alert("Palavra inválida");
-    //  }
-    //});
-  //}
+     else {
+       alert("Palavra inválida");
+     }
+    if (palavraAtual === palavra) {
+      window.alert("Parabéns!");
+    }
+    });
+  }
 
   function criarQuadrados() {
     const quadroJogo = document.getElementById("board");

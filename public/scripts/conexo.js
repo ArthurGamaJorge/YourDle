@@ -1,10 +1,24 @@
 window.onload = () =>{
-    verde = {itens: ["arroz", "batata", "beterraba", "feijão"], desc: "comidas"}
-    azul = {itens: ["fio", "mouse", "teclado", "tv"], desc: "aparelhos técnológicos"}
-    vermelho = {itens: ["cat", "dog", "rabbit", "rat"], desc:"animais escritos em inglês"}
-    amarelo = {itens: ["guaraná", "logitech", "nestle", "nike"], desc: "marcas"}
+
+  infoConexo = {idConexo: (window.location.href.split("/"))[4]}
+  verde = []; azul = []; amarelo = []; vermelho = [];
+
+  fetch("/pegarGrupos", {
+    method:"POST",
+    headers:{
+        "Content-type": "application/json"
+    },
+    body:JSON.stringify(infoConexo)
+}).then(response => response.json()) // Converte a resposta em um objeto JavaScript
+  .then(data => {
+    console.log(data)
+    verde = {itens: data[0].verde.split(",").slice(0, 4), desc: data[0].verde.split(",")[4]}
+    azul = {itens: data[0].azul.split(",").slice(0, 4), desc: data[0].azul.split(",")[4]}
+    vermelho = {itens: data[0].vermelho.split(",").slice(0, 4), desc: data[0].vermelho.split(",")[4]}
+    amarelo = {itens: data[0].amarelo.split(",").slice(0, 4), desc: data[0].amarelo.split(",")}
 
     atualizarBoard()
+  })
     seleçãoAtual = []
 }
 

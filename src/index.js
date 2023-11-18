@@ -18,7 +18,7 @@ app.listen(3030, () =>{
     console.log("Servidor Projeto Node com SQLServer")
 })
 
-var path = require('path');
+path = require('path');
 app.use(express.static(path.join(__dirname, '../public')));
 
 // COLOCAR ARQUIVOS HTML
@@ -93,7 +93,6 @@ app.post("/palavraValida", async(req, res) =>{
   })
 
   app.post("/publicar", async(req, res) =>{
-    console.log(req.body)
     if(savedIdUsuario == req.body.idUsuario){
         if(req.body.tipo == "Wordle"){
             if(req.body.palavra.length != 5){
@@ -104,14 +103,69 @@ app.post("/palavraValida", async(req, res) =>{
             `exec YourDle.spInserirWordle ${req.body.titulo}, ${req.body.palavra}, ${req.body.idUsuario}`
             res.json({resposta: "sucesso"})
         } else{
-            console.log("to-do")
+            await prisma.$queryRaw
+            `exec YourDle.spInserirConexo ${req.body.titulo}, ${req.body.verde.toString()}, ${req.body.azul.toString()}, ${req.body.amarelo.toString()}, ${req.body.vermelho.toString()}, ${req.body.idUsuario}`
+            res.json({resposta: "sucesso"})
         }
     }
   })
 
-  app.post("/searchposts", async(req, res) =>{
-    const jogos = await prisma.$queryRaw
-    `select * from YourDle.v_jogos order by dataConexo, dataWordle`
-    res.json(jogos)
-
+  app.post("/searchwordle", async(req, res) =>{
+    const wordles = await prisma.$queryRaw
+    `select * from YourDle.v_Wordle order by dataWordle`
+    res.json(wordles)
   })
+
+  app.post("/searchconexo", async(req, res) =>{
+    const conexos = await prisma.$queryRaw
+    `select * from YourDle.v_Conexo order by dataConexo`
+    res.json(conexos)
+  })
+
+app.get('/wordle/*', async (req, res) => {
+    const urlString = req.url.toString()
+    const idWordle = (urlString.split("/"))[2];
+
+    if(!isNaN(idWordle)){
+        const search = await prisma.$queryRaw 
+        `select * from YourDle.Wordle where idWordle=${idWordle}`;   
+    
+        if (search != "") {
+        result = search[0]
+        res.sendFile(path.join(__dirname, '../public/wordle.html'));
+    
+        } else {
+        res.send(`<br><br><h1 style="font-size:70px;text-align:center">Jogo de wordle não encontrado.</h1>`);
+        }
+    }
+  });
+
+app.get('/conexo/*', async (req, res) => {
+    const urlString = req.url.toString()
+    const idConexo = (urlString.split("/"))[2];
+
+    if(!isNaN(idConexo)){
+        const search = await prisma.$queryRaw 
+        `select * from YourDle.Conexo where idConexo=${idConexo}`;   
+    
+        if (search != "") {
+        result = search[0]
+        res.sendFile(path.join(__dirname, '../public/conexo.html'));
+    
+        } else {
+        res.send(`<br><br><h1 style="font-size:70px;text-align:center">Jogo de conexo não encontrado.</h1>`);
+        }
+    }
+  });
+
+  app.post('/pegarPalavra', async (req, res) => {
+        const palavra = await prisma.$queryRaw 
+        `select TOP 1 palavra from YourDle.Wordle where idWordle=${req.body.idWordle}`;
+        res.json(palavra);
+  });
+
+  app.post('/pegarGrupos', async (req, res) => {
+    const grupos = await prisma.$queryRaw 
+    `select verde, amarelo, azul, vermelho from YourDle.Conexo where idConexo=${req.body.idConexo}`;
+    res.json(grupos);
+});

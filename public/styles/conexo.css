@@ -86,7 +86,7 @@
 .quadrados{
     display: grid;
     grid-template-columns: repeat(4, 4fr);
-    width: 60%;
+    padding: 0% calc(20vmax - 120px);
     margin: auto;
     gap: 5%;
     transition: 0.55s ease-in-out;
