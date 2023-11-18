@@ -8,7 +8,8 @@ datasource db {
 }
 
 model Conexo {
-  idConexo   Int      @id(map: "PK__Conexo__C427651C5792FE99") @default(autoincrement())
+  idConexo   Int      @id(map: "PK__Conexo__C427651C2B62DAAC") @default(autoincrement())
+  titulo     String   @db.VarChar(50)
   verde      String   @db.VarChar(500)
   azul       String   @db.VarChar(500)
   amarelo    String   @db.VarChar(500)
@@ -21,15 +22,16 @@ model Conexo {
 }
 
 model Usuario {
-  idUsuario Int      @id(map: "PK__Usuario__645723A62A23F111") @default(autoincrement())
-  username  String   @db.VarChar(80)
+  idUsuario Int      @id(map: "PK__Usuario__645723A6996D182C") @default(autoincrement())
+  username  String   @unique(map: "UQ__Usuario__F3DBC572555E15FA") @db.VarChar(80)
   senha     String   @db.VarChar(50)
   Conexo    Conexo[]
   Wordle    Wordle[]
 }
 
 model Wordle {
-  idWordle   Int      @id(map: "PK__Wordle__A82300F47E274A24") @default(autoincrement())
+  idWordle   Int      @id(map: "PK__Wordle__A82300F400E44A26") @default(autoincrement())
+  titulo     String   @db.VarChar(50)
   palavra    String   @db.VarChar(5)
   dataCriado DateTime @db.Date
   curtida    Int

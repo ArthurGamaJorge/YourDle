@@ -179,6 +179,24 @@ h1{
     flex-shrink: 0;
 }
 
+#capa{
+    height: 65%;
+    width: 70%;
+    margin: auto;
+    text-align: center;
+    background-size: cover;
+    background-position: center center;
+}
+
+.wordle #capa{
+    background-image: url('../Images/wordle.png') !important;
+}
+
+.conexo #capa{
+    height: 60%;
+    background-image: url('../Images/conexo.png') !important;
+}
+
 .card button{
     color: white;
 }
@@ -373,18 +391,7 @@ h1{
     width: calc(1vmax + 10px);
 }
 
-#capa{
-    height: 65%;
-    width: 70%;
-    margin: auto;
-    text-align: center;
-}
 
-.wordle #capa{
-    background-image: url('../Images/wordle.png') !important;
-    background-size: cover;
-    background-position: center center;
-}
 
 .DivSair{
     text-align: center; 

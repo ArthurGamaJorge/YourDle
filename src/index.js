@@ -111,14 +111,26 @@ app.post("/palavraValida", async(req, res) =>{
   })
 
   app.post("/searchwordle", async(req, res) =>{
-    const wordles = await prisma.$queryRaw
-    `select * from YourDle.v_Wordle order by dataWordle`
+    wordles = ''
+    if(!req.body.temParametroBusca){
+        wordles = await prisma.$queryRaw
+        `select * from YourDle.v_Wordle order by dataCriado DESC`
+    } else{
+        wordles = await prisma.$queryRaw
+        `select * from YourDle.v_Wordle WHERE (CHARINDEX('${req.body.content}', titulo, 0) > 0) order by dataCriado DESC`
+    }
     res.json(wordles)
   })
 
   app.post("/searchconexo", async(req, res) =>{
-    const conexos = await prisma.$queryRaw
-    `select * from YourDle.v_Conexo order by dataConexo`
+    conexos = ''
+    if(!req.body.temParametroBusca){
+        conexos = await prisma.$queryRaw
+        `select * from YourDle.v_Conexo order by dataCriado DESC`
+    } else{
+        conexos = await prisma.$queryRaw
+        `select * from YourDle.v_Conexo WHERE (CHARINDEX('${req.body.content}', titulo, 0) > 0) order by dataCriado DESC`
+    }
     res.json(conexos)
   })
 

@@ -160,3 +160,12 @@ let confirmarSaida  = () =>{
     localStorage.setItem("login", null)
     fecharBox("All")
 }
+
+function handleEnterKey(event) {
+    if (event.key === 'Enter') {
+        document.getElementById('searchButton').click();
+    }
+}
+
+// Adiciona um ouvinte de evento ao input
+document.getElementById('searchContent').addEventListener('keyup', handleEnterKey);

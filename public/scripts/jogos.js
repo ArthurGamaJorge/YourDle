@@ -1,6 +1,16 @@
-let search = () =>{
+let search = async () =>{
+    let temParametroBusca = false
+    conteudo = document.getElementById('searchContent').value
+    if(conteudo != ""){
+        temParametroBusca = true
+    }
 
-    informações = {content: 'to-do', tópicos: 'to-do', temParametroBusca: 'to-do'}
+    cards = document.querySelectorAll('.card') // remove todos posts antigos
+    for(var j=0; j < cards.length; j++){
+        cards[j].parentNode.removeChild(cards[j]);
+    }
+
+    informações = {content: conteudo, temParametroBusca: temParametroBusca}
 
     fetch("/searchWordle", {
         method:"POST",
@@ -9,14 +19,8 @@ let search = () =>{
     })
     .then(response => response.json()) // Converte a resposta em um objeto JavaScript
     .then(data => {
-
-        cards = document.querySelectorAll('.card') // remove todos posts antigos
-        for(var j=0; j < cards.length; j++){
-            cards[j].parentNode.removeChild(cards[j]);
-        }
-
         for(var i = 0; i < data.length; i++){
-                adicionarJogo(data[i].idWordle, data[i].tituloWordle, data[i].curtidaWordle, data[i].descurtidaWordle, data[i].dataWordle, data[i].username,"wordle")
+            adicionarJogo(data[i].idWordle, data[i].titulo, data[i].curtida, data[i].descurtida, data[i].data, data[i].username,"wordle")
         }
     })
 
@@ -28,7 +32,7 @@ let search = () =>{
     .then(response => response.json()) // Converte a resposta em um objeto JavaScript
     .then(data => {
         for(var i = 0; i < data.length; i++){
-            adicionarJogo(data[i].idConexo, data[i].tituloConexo, data[i].curtidaConexo, data[i].descurtidaConexo, data[i].dataConexo, data[i].username,"conexo")
+            adicionarJogo(data[i].idConexo, data[i].titulo, data[i].curtida, data[i].descurtida, data[i].dataCriado, data[i].username,"conexo")
         }
     })
 }

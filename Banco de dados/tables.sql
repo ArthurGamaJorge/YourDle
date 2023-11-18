@@ -58,10 +58,10 @@ END
 CREATE OR ALTER VIEW YourDle.v_Wordle AS
 SELECT
     W.idWordle,
-    W.titulo AS 'tituloWordle',
-    W.curtida AS 'curtidaWordle',
-    W.descurtida AS 'descurtidaWordle',
-	FORMAT(W.dataCriado, 'dd/MM/yy') AS 'dataWordle',
+    W.titulo,
+    W.curtida,
+    W.descurtida,
+	FORMAT(W.dataCriado, 'dd/MM/yy') AS 'dataCriado',
     U.username
 FROM
     YourDle.Wordle W
@@ -71,12 +71,10 @@ CREATE OR ALTER VIEW YourDle.v_Conexo AS
 SELECT
     U.username,
     C.idConexo,
-    C.titulo AS 'tituloConexo',
-    C.curtida AS 'curtidaConexo',
-    C.descurtida AS 'descurtidaConexo',
-	FORMAT(C.dataCriado, 'dd/MM/yy') AS 'dataConexo'
+    C.titulo,
+    C.curtida,
+    C.descurtida,
+	FORMAT(C.dataCriado, 'dd/MM/yy') as 'dataCriado'
 FROM
     YourDle.Conexo C
 JOIN YourDle.Usuario U ON C.idUsuario = U.idUsuario
-
-select * from YourDle.Conexo
