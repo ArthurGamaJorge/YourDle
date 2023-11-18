@@ -10,7 +10,7 @@
     <link rel="icon" href="Images/icon.png">
     <title>YourDle</title>
 </head>
-<body onclick="fecharBox()">
+<body onclick="fecharBox('All')">
     <header>
         <img src="Images/icon.png" id="logo">
         <h1> YourDle </h1>
@@ -42,8 +42,8 @@
                 <h2>Conexo QSMP</h2>
                 <p>Nome do usuário</p>
                 <div class="interações">
-                    <p id="like"> <img src=Images/like.png class="curtida"> 0 </p>
-                    <p id="dislike"> <img src=Images/dislike.png class="curtida"> 0 </p>
+                    <button id="like"> <img src=Images/like.png class="curtida"> 0 </button>
+                    <button id="dislike"> <img src=Images/dislike.png class="curtida"> 0 </button>
                     <p id="data">14/11/23</p>
                 </div>
             </div>
@@ -52,8 +52,8 @@
                 <h2>Wordle QSMP</h2>
                 <p>Nome do usuário</p>
                 <div class="interações">
-                    <p id="like"> <img src=Images/like.png class="curtida"> 0 </p>
-                    <p id="dislike"> <img src=Images/dislike.png class="curtida"> 0 </p>
+                    <button id="like"> <img src=Images/like.png class="curtida"> 0 </button>
+                    <button id="dislike"> <img src=Images/dislike.png class="curtida"> 0 </button>
                     <p id="data">14/11/23</p>
                 </div>
             </div>
@@ -137,8 +137,15 @@
         <button onclick="publicar('Conexo')">Publicar</button> <br>
     </section>
 
+    <button onclick="sair(); event.stopPropagation()" id="sairButton"> <img src="Images/sair.png"> </button>
 
-    
+    <div id="divInfo" class="DivSair" style="display: none" onclick="event.stopPropagation()">
+        <h2><img src="Images/sair.png"> &nbsp; Deseja realmente sair?</h2> <br> <hr> <br> <br>
+        <button onclick="confirmarSaida()" id="ConfirmarSaidaButton">Sair</button>
+    </div>
+
+
+    <script src="scripts/jogos.js"></script>
     <script src="scripts/generico.js"></script>
     <script src="scripts/home.js"></script>
 </body>

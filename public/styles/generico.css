@@ -11,19 +11,27 @@ body{
     color: white;
 }
 
+button, a{
+    cursor: pointer
+}
+
+hr{
+    width: 100%;
+}
+
 .aberto{
     display: block !important;
 }
 
-#divInfo{
+#divInfo {
     border: 2px solid rgb(207, 177, 218);
     width: 40vw;
     border-radius: 5%;
-    position: absolute; 
+    position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    background-color: rgba(27,13,33,1);
+    background-color: rgba(27, 13, 33, 1);
     padding: 5% 2%;
     font-size: calc(1vmax + 10px);
 }

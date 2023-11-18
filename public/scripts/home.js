@@ -3,6 +3,7 @@ window.onload = () =>{
     if(loginInformations != null){
         logar(loginInformations)
     }
+    search()
 }
 
 let filtrar = () =>{
@@ -10,9 +11,13 @@ let filtrar = () =>{
     divFiltros.classList.toggle("aberto");
 }
 
-let fecharBox = () =>{
+let fecharBox = tipo =>{
     document.querySelector('#boxLogin').classList.remove("open")
     document.getElementById('divCriarPost').classList.remove("aberto")
+
+    if(tipo != ".DivSair"){
+        document.querySelector('.DivSair').classList.remove("aberto")
+    }
 }
 
 Jogo = "Wordle"
@@ -59,7 +64,7 @@ let registrar = () =>{
         } else{
             alert("Registro feito com sucesso")
             localStorage.setItem("login", JSON.stringify(infoRegistro))
-            fecharBox()
+            fecharBox("All")
             document.getElementById('divCriarPost').classList.toggle("aberto")
         }
     })
@@ -87,7 +92,7 @@ let logar = infoLogin =>{
         } else{
             dataInfo = data.info
             localStorage.setItem("login", JSON.stringify(dataInfo))
-            fecharBox()
+            fecharBox("All")
         }
     })
 }
@@ -118,11 +123,12 @@ let mudarSeção = ação =>{
 }
 
 let publicar = Tipo =>{
+    titulo = document.getElementById('titulo').value
     if(Tipo == "Conexo"){
 
     } else{
         palavra = document.getElementById('palavraWordle').value
-        infoPost = {idUsuario: loginInformations.idUsuario, tipo: "Wordle", palavra: palavra}
+        infoPost = {idUsuario: loginInformations.idUsuario, tipo: "Wordle", palavra: palavra, titulo: titulo}
     }
     fetch("/publicar", {
         method:"POST",
@@ -140,3 +146,12 @@ let publicar = Tipo =>{
     })
 }
 
+let sair = () =>{
+    fecharBox(".DivSair")
+    document.querySelector('.DivSair').classList.toggle("aberto")
+}
+
+let confirmarSaida  = () =>{
+    localStorage.setItem("login", null)
+    fecharBox("All")
+}

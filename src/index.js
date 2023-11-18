@@ -93,6 +93,7 @@ app.post("/palavraValida", async(req, res) =>{
   })
 
   app.post("/publicar", async(req, res) =>{
+    console.log(req.body)
     if(savedIdUsuario == req.body.idUsuario){
         if(req.body.tipo == "Wordle"){
             if(req.body.palavra.length != 5){
@@ -100,7 +101,7 @@ app.post("/palavraValida", async(req, res) =>{
                 return
             }
             await prisma.$queryRaw
-            `exec YourDle.spInserirWordle ${req.body.palavra}, ${req.body.idUsuario}`
+            `exec YourDle.spInserirWordle ${req.body.titulo}, ${req.body.palavra}, ${req.body.idUsuario}`
             res.json({resposta: "sucesso"})
         } else{
             console.log("to-do")
@@ -108,4 +109,9 @@ app.post("/palavraValida", async(req, res) =>{
     }
   })
 
-    
+  app.post("/searchposts", async(req, res) =>{
+    const jogos = await prisma.$queryRaw
+    `select * from YourDle.v_jogos order by dataConexo, dataWordle`
+    res.json(jogos)
+
+  })

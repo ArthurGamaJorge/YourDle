@@ -51,7 +51,6 @@ h1{
 }
 
 #filter:hover{
-    cursor: pointer;
     filter: brightness(80%);
 }
 
@@ -121,7 +120,6 @@ h1{
     padding: 12px 30px;
     border-radius: 6px;
     background-color: rgb(59, 35, 68);
-    cursor: pointer;
   }
   .input-box .button:active {
     transform: translateY(-50%) scale(0.98);
@@ -181,6 +179,10 @@ h1{
     flex-shrink: 0;
 }
 
+.card button{
+    color: white;
+}
+
 .interações{
     display: flex;
     justify-content: center;
@@ -197,12 +199,10 @@ h1{
 }
 
 #like:hover, #create:hover{
-    cursor: pointer;
     filter: invert(26%) sepia(99%) saturate(1236%) hue-rotate(92deg) brightness(99%) contrast(107%);
 }
 
-#dislike:hover{
-    cursor: pointer;
+#dislike:hover, #sairButton:hover{
     filter: invert(23%) sepia(84%) saturate(10000%) hue-rotate(359deg) brightness(91%) contrast(137%);
 }
 
@@ -260,7 +260,6 @@ h1{
 
 #submitInput{
     color: white;
-    cursor: pointer;
 }
 
 #box #emailInput, #passwordInput{
@@ -290,7 +289,6 @@ h1{
 }
 
 #exitLogin:hover{
-    cursor: pointer;
     font-size: 15px;
 }
 
@@ -344,7 +342,6 @@ h1{
 #divCriarPost button{
     color: white;
     background-color: rgb(59, 35, 68);
-    cursor: pointer;
     padding: 2%;
     border: 1px solid white;
 }
@@ -353,7 +350,6 @@ h1{
     border: none !important;
     padding: 0 !important;
     background-color: transparent !important;
-    cursor: pointer;
     width: calc(1vmax + 5px);
     position: absolute;
     bottom: 5%;
@@ -366,4 +362,37 @@ h1{
 
 #setaEsquerda{
     left: 2%;
+}
+
+#sairButton{
+    position: absolute;
+    right: 1%;
+}
+
+#sairButton img{
+    width: calc(1vmax + 10px);
+}
+
+.DivSair{
+    text-align: center; 
+    padding: 2% 4% !important;
+}
+
+#ConfirmarSaidaButton {
+    padding: 2%;
+    background-color: rgb(68, 45, 76);
+    color: white;
+    border: 1px solid white;
+    transition: all 0.2s ease-in-out;
+    margin: auto;
+    width: 30%;
+    border-radius: 10%;
+}
+
+#ConfirmarSaidaButton:hover{
+    scale: 1.1
+}
+
+#ConfirmarSaidaButton:active{
+    scale: 0.9
 }
