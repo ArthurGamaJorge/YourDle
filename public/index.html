@@ -24,13 +24,13 @@
             <div class="input-box" id="search">
                 <i class="uil uil-search"></i>
                 <input type="text" placeholder="Procure aqui..." id="searchContent"/>
-                <button class="button" id="searchButton" onclick="search()">Search</button>
+                <button class="button" id="searchButton" onclick="search()">Procure</button>
               </div>
 
             <button id="filter" onclick="filtrar()"> <img src="Images/filter.png"> </button>
             <div id="filterOptions" style="display: none">
-                <p> <img src="Images/relogio.png"> data </p>
-                <p> <img src="Images/like.png"> curtidas </p>
+                <button onclick="selecionar(this)" id="data" class="Selecionado"> <img src="Images/relogio.png"> data </button> <br>
+                <button onclick="selecionar(this)" id="curtidas"> <img src="Images/like.png"> curtidas </button>
             </div>
 
         </div>

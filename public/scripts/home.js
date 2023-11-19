@@ -90,8 +90,9 @@ let logar = infoLogin =>{
         if(data.resposta != "sucesso"){
             alert("Informações incorretas")
         } else{
-            dataInfo = data.info
-            localStorage.setItem("login", JSON.stringify(dataInfo))
+            dataInfo = 
+            localStorage.setItem("login", JSON.stringify(data.info))
+            loginInformations = JSON.parse(localStorage.getItem("login"))
             fecharBox("All")
         }
     })
@@ -157,6 +158,7 @@ let sair = () =>{
 }
 
 let confirmarSaida  = () =>{
+    loginInformations = null
     localStorage.setItem("login", null)
     fecharBox("All")
 }
@@ -166,6 +168,12 @@ function handleEnterKey(event) {
         document.getElementById('searchButton').click();
     }
 }
-
-// Adiciona um ouvinte de evento ao input
 document.getElementById('searchContent').addEventListener('keyup', handleEnterKey);
+
+let selecionar = (filtro) =>{
+    document.getElementById('data').classList.remove("Selecionado")
+    document.getElementById('curtidas').classList.remove("Selecionado")
+    
+    filtro.classList.add('Selecionado')
+    search()
+}

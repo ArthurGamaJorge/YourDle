@@ -8,34 +8,56 @@ datasource db {
 }
 
 model Conexo {
-  idConexo   Int      @id(map: "PK__Conexo__C427651C2B62DAAC") @default(autoincrement())
-  titulo     String   @db.VarChar(50)
-  verde      String   @db.VarChar(500)
-  azul       String   @db.VarChar(500)
-  amarelo    String   @db.VarChar(500)
-  vermelho   String   @db.VarChar(500)
-  dataCriado DateTime @db.Date
-  curtida    Int
-  descurtida Int
-  idUsuario  Int
-  Usuario    Usuario  @relation(fields: [idUsuario], references: [idUsuario], onUpdate: NoAction, map: "fk_UsuarioConexo")
+  idConexo      Int             @id(map: "PK__Conexo__C427651C2B62DAAC") @default(autoincrement())
+  titulo        String          @db.VarChar(50)
+  verde         String          @db.VarChar(500)
+  azul          String          @db.VarChar(500)
+  amarelo       String          @db.VarChar(500)
+  vermelho      String          @db.VarChar(500)
+  dataCriado    DateTime        @db.Date
+  curtida       Int
+  descurtida    Int
+  idUsuario     Int
+  Usuario       Usuario         @relation(fields: [idUsuario], references: [idUsuario], onUpdate: NoAction, map: "fk_UsuarioConexo")
+  UsuarioConexo UsuarioConexo[]
 }
 
 model Usuario {
-  idUsuario Int      @id(map: "PK__Usuario__645723A6996D182C") @default(autoincrement())
-  username  String   @unique(map: "UQ__Usuario__F3DBC572555E15FA") @db.VarChar(80)
-  senha     String   @db.VarChar(50)
-  Conexo    Conexo[]
-  Wordle    Wordle[]
+  idUsuario     Int             @id(map: "PK__Usuario__645723A6996D182C") @default(autoincrement())
+  username      String          @unique(map: "UQ__Usuario__F3DBC572555E15FA") @db.VarChar(80)
+  senha         String          @db.VarChar(50)
+  Conexo        Conexo[]
+  UsuarioConexo UsuarioConexo[]
+  UsuarioWordle UsuarioWordle[]
+  Wordle        Wordle[]
 }
 
 model Wordle {
-  idWordle   Int      @id(map: "PK__Wordle__A82300F400E44A26") @default(autoincrement())
-  titulo     String   @db.VarChar(50)
-  palavra    String   @db.VarChar(5)
-  dataCriado DateTime @db.Date
-  curtida    Int
-  descurtida Int
-  idUsuario  Int
-  Usuario    Usuario  @relation(fields: [idUsuario], references: [idUsuario], onUpdate: NoAction, map: "fk_UsuarioWordle")
+  idWordle      Int             @id(map: "PK__Wordle__A82300F400E44A26") @default(autoincrement())
+  titulo        String          @db.VarChar(50)
+  palavra       String          @db.VarChar(5)
+  dataCriado    DateTime        @db.Date
+  curtida       Int
+  descurtida    Int
+  idUsuario     Int
+  UsuarioWordle UsuarioWordle[]
+  Usuario       Usuario         @relation(fields: [idUsuario], references: [idUsuario], onUpdate: NoAction, map: "fk_UsuarioWordle")
+}
+
+model UsuarioConexo {
+  idUsuarioConexo Int      @id(map: "PK__UsuarioC__7BA65DCC6189CC19") @default(autoincrement())
+  idUsuario       Int
+  idConexo        Int
+  curtido         Boolean?
+  Conexo          Conexo   @relation(fields: [idConexo], references: [idConexo], onUpdate: NoAction, map: "fk_ConexoUsuarioConexo")
+  Usuario         Usuario  @relation(fields: [idUsuario], references: [idUsuario], onUpdate: NoAction, map: "fk_UsuarioUsuarioConexo")
+}
+
+model UsuarioWordle {
+  idUsuarioWordle Int      @id(map: "PK__UsuarioW__3CC0BA3DC2B1A5EA") @default(autoincrement())
+  idUsuario       Int
+  idWordle        Int
+  curtido         Boolean?
+  Usuario         Usuario  @relation(fields: [idUsuario], references: [idUsuario], onUpdate: NoAction, map: "fk_UsuarioUsuarioWordle")
+  Wordle          Wordle   @relation(fields: [idWordle], references: [idWordle], onUpdate: NoAction, map: "fk_WordleUsuarioConexo")
 }

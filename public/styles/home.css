@@ -1,6 +1,7 @@
 button{
     background-color: transparent;
     border: none;
+    color: white;
 }
 
 #logo{
@@ -216,11 +217,11 @@ h1{
     width: calc(1vmax + 5px);
 }
 
-#like:hover, #create:hover{
+#like:hover, #create:hover, .Curtido, .Selecionado{
     filter: invert(26%) sepia(99%) saturate(1236%) hue-rotate(92deg) brightness(99%) contrast(107%);
 }
 
-#dislike:hover, #sairButton:hover{
+#dislike:hover, #sairButton:hover, .Descurtido{
     filter: invert(23%) sepia(84%) saturate(10000%) hue-rotate(359deg) brightness(91%) contrast(137%);
 }
 

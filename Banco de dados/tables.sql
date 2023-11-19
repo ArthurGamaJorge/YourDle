@@ -21,6 +21,17 @@ CREATE TABLE YourDle.Conexo(
 	REFERENCES YourDle.Usuario(idUsuario)
 )
 
+CREATE TABLE YourDle.UsuarioConexo(
+	idUsuarioConexo INT PRIMARY KEY IDENTITY(1,1),
+	idUsuario INT NOT NULL,
+	CONSTRAINT fk_UsuarioUsuarioConexo FOREIGN KEY(idUsuario)
+	REFERENCES YourDle.Usuario(idUsuario),
+	idConexo INT NOT NULL,
+	CONSTRAINT fk_ConexoUsuarioConexo FOREIGN KEY(idConexo)
+	REFERENCES YourDle.Conexo(idConexo),
+	curtido BIT
+)	
+
 CREATE TABLE YourDle.Wordle(
 	idWordle INT PRIMARY KEY IDENTITY(1,1),
 	titulo VARCHAR(50) NOT NULL,
@@ -32,6 +43,17 @@ CREATE TABLE YourDle.Wordle(
 	CONSTRAINT fk_UsuarioWordle FOREIGN KEY(idUsuario)
 	REFERENCES YourDle.Usuario(idUsuario)
 )
+
+CREATE TABLE YourDle.UsuarioWordle(
+	idUsuarioWordle INT PRIMARY KEY IDENTITY(1,1),
+	idUsuario INT NOT NULL,
+	CONSTRAINT fk_UsuarioUsuarioWordle FOREIGN KEY(idUsuario)
+	REFERENCES YourDle.Usuario(idUsuario),
+	idWordle INT NOT NULL,
+	CONSTRAINT fk_WordleUsuarioConexo FOREIGN KEY(idWordle)
+	REFERENCES YourDle.Wordle(idWordle),
+	curtido BIT
+)	
 
 CREATE OR ALTER PROCEDURE YourDle.spInserirWordle
 	@titulo AS VARCHAR(50),
@@ -55,26 +77,61 @@ BEGIN
 END
 
 
-CREATE OR ALTER VIEW YourDle.v_Wordle AS
+CREATE OR ALTER PROCEDURE YourDle.spInserirUsuarioWordle
+	@idUsuario AS INT,
+	@idWordle AS INT,
+	@curtido AS BIT
+AS
+BEGIN
+	IF @curtido = 1
+		UPDATE YourDle.Wordle set curtida += 1 where idWordle = @idWordle
+	IF @curtido = 0
+		UPDATE YourDle.Wordle set descurtida += 1 where idWordle = @idWordle
+
+	INSERT INTO YourDle.UsuarioWordle(idUsuario, idWordle, curtido)
+	VALUES (@idUsuario, @idWordle, @curtido) 
+END
+
+
+CREATE OR ALTER PROCEDURE YourDle.spInserirUsuarioConexo
+	@idUsuario AS INT,
+	@idConexo AS INT,
+	@curtido AS BIT
+AS
+BEGIN
+	IF @curtido = 1
+		UPDATE YourDle.Conexo set curtida += 1 where idConexo = @idConexo
+	IF @curtido = 0
+		UPDATE YourDle.Conexo set descurtida += 1 where idConexo = @idConexo
+
+	INSERT INTO YourDle.UsuarioConexo(idUsuario, idConexo, curtido)
+	VALUES (@idUsuario, @idConexo, @curtido) 
+END
+
+
+CREATE OR ALTER VIEW YourDle.v_Jogos AS
 SELECT
-    W.idWordle,
+    'wordle' AS tipo,
+    W.idWordle AS idJogo,
     W.titulo,
     W.curtida,
     W.descurtida,
-	FORMAT(W.dataCriado, 'dd/MM/yy') AS 'dataCriado',
+    FORMAT(W.dataCriado, 'dd/MM/yy') AS 'dataCriado',
     U.username
 FROM
     YourDle.Wordle W
 JOIN YourDle.Usuario U ON W.idUsuario = U.idUsuario
 
-CREATE OR ALTER VIEW YourDle.v_Conexo AS
+UNION ALL
+
 SELECT
-    U.username,
-    C.idConexo,
+    'conexo' AS tipo,
+    C.idConexo AS idJogo,
     C.titulo,
     C.curtida,
     C.descurtida,
-	FORMAT(C.dataCriado, 'dd/MM/yy') as 'dataCriado'
+    FORMAT(C.dataCriado, 'dd/MM/yy') AS 'dataCriado',
+    U.username
 FROM
     YourDle.Conexo C
-JOIN YourDle.Usuario U ON C.idUsuario = U.idUsuario
+JOIN YourDle.Usuario U ON C.idUsuario = U.idUsuario;

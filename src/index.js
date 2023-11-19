@@ -110,29 +110,28 @@ app.post("/palavraValida", async(req, res) =>{
     }
   })
 
-  app.post("/searchwordle", async(req, res) =>{
-    wordles = ''
-    if(!req.body.temParametroBusca){
-        wordles = await prisma.$queryRaw
-        `select * from YourDle.v_Wordle order by dataCriado DESC`
+  app.post("/search", async(req, res) =>{
+    jogos = ''
+    if(req.body.priorizarCurtidas){
+        if(!req.body.temParametroBusca){
+            jogos = await prisma.$queryRaw
+            `select * from YourDle.v_Jogos order by curtida DESC`
+        } else{
+            jogos = await prisma.$queryRaw
+            `select * from YourDle.v_Jogos where CHARINDEX(${req.body.content}, titulo, 0) > 0 order by curtida DESC`;
+        }
+        res.json(jogos)
     } else{
-        wordles = await prisma.$queryRaw
-        `select * from YourDle.v_Wordle WHERE (CHARINDEX('${req.body.content}', titulo, 0) > 0) order by dataCriado DESC`
+        if(!req.body.temParametroBusca){
+            jogos = await prisma.$queryRaw
+            `select * from YourDle.v_Jogos order by dataCriado DESC`
+        } else{
+            jogos = await prisma.$queryRaw
+            `select * from YourDle.v_Jogos where CHARINDEX(${req.body.content}, titulo, 0) > 0 order by dataCriado DESC`;
+        }
+        res.json(jogos)
     }
-    res.json(wordles)
-  })
-
-  app.post("/searchconexo", async(req, res) =>{
-    conexos = ''
-    if(!req.body.temParametroBusca){
-        conexos = await prisma.$queryRaw
-        `select * from YourDle.v_Conexo order by dataCriado DESC`
-    } else{
-        conexos = await prisma.$queryRaw
-        `select * from YourDle.v_Conexo WHERE (CHARINDEX('${req.body.content}', titulo, 0) > 0) order by dataCriado DESC`
-    }
-    res.json(conexos)
-  })
+})
 
 app.get('/wordle/*', async (req, res) => {
     const urlString = req.url.toString()
@@ -181,3 +180,165 @@ app.get('/conexo/*', async (req, res) => {
     `select verde, amarelo, azul, vermelho from YourDle.Conexo where idConexo=${req.body.idConexo}`;
     res.json(grupos);
 });
+
+app.post("/curtidaswordle", async(req, res) =>{
+    const existeTabela = await prisma.$queryRaw
+        `select * from YourDle.UsuarioWordle where idUsuario = ${req.body.idUsuario} and idWordle = ${req.body.idWordle} and curtido is not null`;
+    
+    criadorPost = await prisma.$queryRaw   
+          `select idUsuario from YourDle.Wordle where idWordle = ${req.body.idWordle}`;
+  
+    if(req.body.ação == "verificar"){
+      if(existeTabela != ""){
+        res.json(existeTabela)
+        return
+      }
+      res.json({resposta: ""})
+      return
+    }
+  
+  if(savedIdUsuario == req.body.idUsuario){
+      const existeInteração = await prisma.$queryRaw
+          `select * from YourDle.UsuarioWordle where idUsuario = ${req.body.idUsuario} and idWordle = ${req.body.idWordle}`;
+        
+      if(existeInteração != ""){
+        if(req.body.ação == "descurtir"){
+            await prisma.$queryRaw
+            ` UPDATE YourDle.UsuarioWordle set curtido = 0 where idUsuarioWordle = ${existeInteração[0].idUsuarioWordle}`
+            
+            if(existeInteração[0].curtido == 1){
+                await prisma.$queryRaw
+                `UPDATE YourDle.Wordle set curtida -= 1 where idWordle = ${req.body.idWordle}`;
+            }
+            await prisma.$queryRaw`
+            UPDATE YourDle.Wordle set descurtida += 1 where idWordle = ${req.body.idWordle};
+            `;
+
+        } 
+        if(req.body.ação == "tirarDescurtida"){
+          await prisma.$queryRaw`
+           UPDATE YourDle.UsuarioWordle set curtido = null where idUsuarioWordle = ${existeInteração[0].idUsuarioWordle};
+          UPDATE YourDle.Wordle set descurtida -= 1 where idWordle = ${req.body.idWordle};
+        `;
+        }
+
+        if(req.body.ação == "curtir"){
+          await prisma.$queryRaw
+          ` UPDATE YourDle.UsuarioWordle set curtido = 1 where idUsuarioWordle = ${existeInteração[0].idUsuarioWordle};`
+          
+          if(existeInteração[0].curtido == 0){
+            await prisma.$queryRaw
+            `UPDATE YourDle.Wordle set descurtida -= 1 where idWordle = ${req.body.idWordle}`
+          }
+          await prisma.$queryRaw
+          `UPDATE YourDle.Wordle set curtida += 1 where idWordle = ${req.body.idWordle}`
+        } 
+        
+        if(req.body.ação == "tirarCurtida"){
+          await prisma.$queryRaw`
+            UPDATE YourDle.UsuarioWordle set curtido = null where idUsuarioWordle = ${existeInteração[0].idUsuarioWordle};
+            UPDATE YourDle.Wordle set curtida -= 1 where idWordle = ${req.body.idWordle};
+        `
+        }}
+      else{
+          opção = -1
+          if(req.body.ação == "descurtir"){
+            opção = 0
+          } 
+          if(req.body.ação == "tirarDescurtida" || req.body.ação == "tirarCurtida"){
+            opção = null
+          }
+          if(req.body.ação == "curtir"){
+            opção = 1
+          } 
+          
+          await prisma.$queryRaw
+          `exec YourDle.spInserirUsuarioWordle ${req.body.idUsuario}, ${req.body.idWordle}, ${opção}`
+    }
+    res.json({resposta: ""})
+  }else{
+      res.json({resposta: ""})
+    }
+})
+
+
+
+app.post("/curtidasconexo", async(req, res) =>{
+    const existeTabela = await prisma.$queryRaw
+        `select * from YourDle.UsuarioConexo where idUsuario = ${req.body.idUsuario} and idConexo = ${req.body.idConexo} and curtido is not null`;
+    
+    criadorPost = await prisma.$queryRaw   
+          `select idUsuario from YourDle.Conexo where idConexo = ${req.body.idConexo}`;
+
+    if(req.body.ação == "verificar"){
+      if(existeTabela != ""){
+        res.json(existeTabela)
+        return
+      }
+      res.json({resposta: ""})
+      return
+    }
+  
+  if(savedIdUsuario == req.body.idUsuario){
+      const existeInteração = await prisma.$queryRaw
+          `select * from YourDle.UsuarioConexo where idUsuario = ${req.body.idUsuario} and idConexo = ${req.body.idConexo}`;
+        
+      if(existeInteração != ""){
+        if(req.body.ação == "descurtir"){
+            await prisma.$queryRaw
+            `UPDATE YourDle.UsuarioConexo set curtido = 0 where idUsuarioConexo = ${existeInteração[0].idUsuarioConexo}`
+            
+            if(existeInteração[0].curtido == 1){
+                await prisma.$queryRaw
+                `UPDATE YourDle.Conexo set curtida -= 1 where idConexo = ${req.body.idConexo}`;
+            }
+            await prisma.$queryRaw`
+            UPDATE YourDle.Conexo set descurtida += 1 where idConexo = ${req.body.idConexo};
+            `;
+
+        } 
+        if(req.body.ação == "tirarDescurtida"){
+          await prisma.$queryRaw`
+          UPDATE YourDle.UsuarioConexo set curtido = null where idUsuarioConexo = ${existeInteração[0].idUsuarioConexo};
+          UPDATE YourDle.Conexo set descurtida -= 1 where idConexo = ${req.body.idConexo};
+        `;
+        }
+
+        if(req.body.ação == "curtir"){
+          await prisma.$queryRaw
+          `UPDATE YourDle.UsuarioConexo set curtido = 1 where idUsuarioConexo = ${existeInteração[0].idUsuarioConexo}`
+          
+          if(existeInteração[0].curtido == 0){
+            await prisma.$queryRaw
+            `UPDATE YourDle.Conexo set descurtida -= 1 where idConexo = ${req.body.idConexo}`
+          }
+          await prisma.$queryRaw
+          `UPDATE YourDle.Conexo set curtida += 1 where idConexo = ${req.body.idConexo}`
+        } 
+        
+        if(req.body.ação == "tirarCurtida"){
+          await prisma.$queryRaw`
+            UPDATE YourDle.UsuarioConexo set curtido = null where idUsuarioConexo = ${existeInteração[0].idUsuarioConexo};
+            UPDATE YourDle.Conexo set curtida -= 1 where idConexo = ${req.body.idConexo};
+        `
+        }}
+      else{
+          opção = -1
+          if(req.body.ação == "descurtir"){
+            opção = 0
+          } 
+          if(req.body.ação == "tirarDescurtida" || req.body.ação == "tirarCurtida"){
+            opção = null
+          }
+          if(req.body.ação == "curtir"){
+            opção = 1
+          } 
+          
+          await prisma.$queryRaw
+          `exec YourDle.spInserirUsuarioConexo ${req.body.idUsuario}, ${req.body.idConexo}, ${opção}`
+    }
+    res.json({resposta: ""})
+  }else{
+      res.json({resposta: ""})
+    }
+})

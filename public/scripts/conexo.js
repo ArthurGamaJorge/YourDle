@@ -157,11 +157,3 @@ const shuffle = (array) => {
   function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
-
-let mostrarInfo = () => {
-    document.getElementById('divInfo').classList.toggle('aberto')
-}
-
-let fecharInfo = () => {
-    document.getElementById('divInfo').classList.remove('aberto')
-}

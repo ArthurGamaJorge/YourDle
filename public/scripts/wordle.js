@@ -48,6 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const letraCorreta = palavra.includes(letra);
 
     if (!letraCorreta) {
+      document.getElementById(`${letra}`).style = "background-color: rgb(58, 58, 60)"
       return "rgb(58, 58, 60)";
     }
 
