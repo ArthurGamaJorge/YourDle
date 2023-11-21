@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  palavra = 'teste'
+  palavra = ''
+  bloquearClique = false
   
   infoWordle = {idWordle: (window.location.href.split("/"))[4]}
 
@@ -77,6 +78,7 @@ const itemCounter = (value, index) => {
 };
 
   function enviarPalavra() {
+    bloquearClique = true
     arrayPalavraAtual = getArrayPalavraAtual();
     if (arrayPalavraAtual.length !== 5) {
       window.alert("A palavra deve ter 5 letras");
@@ -128,6 +130,7 @@ const itemCounter = (value, index) => {
       window.alert("Parabéns!");
     }
     });
+    bloquearClique = false
   }
 
   function criarQuadrados() {
@@ -161,6 +164,10 @@ const itemCounter = (value, index) => {
   document.addEventListener("keydown", (evento) => {
     const tecla = evento.key.toLowerCase(); // Convertendo para minúsculas para corresponder aos data-keys
     const botao = document.querySelector(`button[data-key="${tecla}"]`);
+
+    if(bloquearClique){
+      return
+    }
 
     if (botao || tecla === "backspace") {
       if (tecla === "enter") {
