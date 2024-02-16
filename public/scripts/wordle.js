@@ -95,7 +95,7 @@ const itemCounter = (value, index) => {
     })
     .then(response => response.json())
     .then(data => {
-      if (data.resposta === true) {
+      if (data.resposta === true || palavraAtual === palavra) {
         const primeiroIdLetra = contadorPalavrasAdivinhadas * 5 + 1;
         const intervalo = 200;
 
@@ -117,20 +117,24 @@ const itemCounter = (value, index) => {
         contadorPalavrasAdivinhadas += 1;
 
         if (palavrasAdivinhadas.length === 6) {
-          window.alert(`Desculpe, você não tem mais tentativas! A palavra é ${palavra}.`);
+          window.alert(`Desculpe, você não tem mais tentativas! A palavra era ${palavra}.`);
         }
 
         palavrasAdivinhadas.push([]);
+
+        if (palavraAtual === palavra) {
+          window.alert("Parabéns!");
+        }
         
       } 
      else {
        alert("Palavra inválida");
      }
-    if (palavraAtual === palavra) {
-      window.alert("Parabéns!");
-    }
+    
     });
-    bloquearClique = false
+    if (palavraAtual != palavra){
+      bloquearClique = false
+    }
   }
 
   function criarQuadrados() {
@@ -151,8 +155,7 @@ const itemCounter = (value, index) => {
       return
     }
 
-    const letraRemovida = arrayPalavraAtual.pop();
-
+    arrayPalavraAtual.pop();
     palavrasAdivinhadas[palavrasAdivinhadas.length - 1] = arrayPalavraAtual;
 
     const ultimaLetraElemento = document.getElementById(String(espacoDisponivel - 1));
@@ -162,7 +165,7 @@ const itemCounter = (value, index) => {
   }
 
   document.addEventListener("keydown", (evento) => {
-    const tecla = evento.key.toLowerCase(); // Convertendo para minúsculas para corresponder aos data-keys
+    const tecla = evento.key.toLowerCase(); 
     const botao = document.querySelector(`button[data-key="${tecla}"]`);
 
     if(bloquearClique){
@@ -187,6 +190,10 @@ const itemCounter = (value, index) => {
   for (let i = 0; i < teclas.length; i++) {
     teclas[i].onclick = ({ target }) => {
       const letra = target.getAttribute("data-key");
+
+      if(bloquearClique){
+        return
+      }
 
       if (letra === "enter") {
         enviarPalavra();

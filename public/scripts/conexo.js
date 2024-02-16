@@ -40,10 +40,17 @@ let atualizarBoard = () =>{
   }
 }
 
-let removerAnimações = () =>{
+let removerAnimações = async(tempo) =>{
+  await sleep(tempo)
   for(var i = 0; i < (verde.itens.length + amarelo.itens.length + vermelho.itens.length + azul.itens.length); i++){
     botões[i].classList.remove('tremido')
     botões[i].classList.remove('sucedido')
+  }
+  results = document.querySelectorAll('.result')
+  console.log(results)
+  for(var i = 0; i < results.length; i++){
+    console.log('aaa')
+    results[i].classList.remove('aparente')
   }
 }
 
@@ -118,8 +125,7 @@ let resolvido = async(cor, array) => {
         botões[l].classList.add('tremido')
       }
     }
-    await sleep(500)
-    removerAnimações()
+    removerAnimações(500)
   } else{
     removidos = []
     for(var k = 0; k < (verde.itens.length + amarelo.itens.length + vermelho.itens.length + azul.itens.length); k++){
@@ -129,16 +135,15 @@ let resolvido = async(cor, array) => {
         removidos.push(botões[k])
       }
     }
-    await sleep(2000)
-    removerAnimações()
+    removerAnimações(2000)
       for(var m = 0; m<4; m++){divQuadrados.removeChild(removidos[m])}
     divQuadrados.innerHTML += `
-    <div class="result ${cor}">
+    <div class="result ${cor} aparente">
     <h2> ${array.desc} </h2>
     <p> ${array.itens[0]} ${array.itens[1]} ${array.itens[2]} ${array.itens[3]} </p>
     </div>
   `
-  await sleep(250)
+  removerAnimações(2000)
   }
   document.getElementById('quantasTentativas').textContent = Number(document.getElementById('quantasTentativas').textContent) + 1
   seleçãoAtual = []

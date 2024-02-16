@@ -95,10 +95,12 @@ app.post("/palavraValida", async(req, res) =>{
   app.post("/publicar", async(req, res) =>{
     if(savedIdUsuario == req.body.idUsuario){
         if(req.body.tipo == "Wordle"){
+            req.body.palavra = req.body.palavra.replace(/[^a-zA-Z0-9 ]/g, '');
             if(req.body.palavra.length != 5){
-                res.json({resposta: "A palavra deve ter exatamente 5 letras"})
+                res.json({resposta: "A palavra deve ter exatamente 5 letras sem caractéres especiais"})
                 return
             }
+
             await prisma.$queryRaw
             `exec YourDle.spInserirWordle ${req.body.titulo}, ${req.body.palavra}, ${req.body.idUsuario}`
             res.json({resposta: "sucesso"})

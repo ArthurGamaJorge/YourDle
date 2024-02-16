@@ -11,6 +11,11 @@
     animation: sucesso 2s ease-in-out;
 }
 
+.aparente{
+  animation: 0.25s aparecer ease-in-out;
+}
+
+
 @keyframes sucesso {
     10% {
       scale: 1.1
@@ -64,7 +69,6 @@
     grid-column: 1/-1;
     border: 1px solid white;
     text-align: center;
-    animation: 0.25s aparecer ease-in-out;
 }
 
 .vermelho{

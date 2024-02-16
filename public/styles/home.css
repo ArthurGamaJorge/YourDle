@@ -23,6 +23,14 @@ h1{
     font-size: calc(2vmax + 20px);
 }
 
+a{
+    color: rgb(180, 27, 180);
+}
+
+a:visited {
+    color: rgb(112, 40, 112);
+}
+
 .content{
     border: 2px solid white;
     margin: 10px;
