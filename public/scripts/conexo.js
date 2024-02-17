@@ -11,7 +11,6 @@ window.onload = () =>{
     body:JSON.stringify(infoConexo)
 }).then(response => response.json()) // Converte a resposta em um objeto JavaScript
   .then(data => {
-    console.log(data)
     verde = {itens: data[0].verde.split(",").slice(0, 4), desc: data[0].verde.split(",")[4]}
     azul = {itens: data[0].azul.split(",").slice(0, 4), desc: data[0].azul.split(",")[4]}
     vermelho = {itens: data[0].vermelho.split(",").slice(0, 4), desc: data[0].vermelho.split(",")[4]}
@@ -47,9 +46,7 @@ let removerAnimações = async(tempo) =>{
     botões[i].classList.remove('sucedido')
   }
   results = document.querySelectorAll('.result')
-  console.log(results)
   for(var i = 0; i < results.length; i++){
-    console.log('aaa')
     results[i].classList.remove('aparente')
   }
 }

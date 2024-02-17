@@ -14,17 +14,19 @@ document.addEventListener("DOMContentLoaded", () => {
 }).then(response => response.json()) // Converte a resposta em um objeto JavaScript
   .then(data => {
     palavra = data[0].palavra.toLowerCase()
+
+    criarQuadrados();
+
+    palavrasAdivinhadas = [[]];
+    espacoDisponivel = 1;
+
+    arrayResposta = [palavra[0], palavra[1], palavra[2], palavra[3], palavra[4]]
+    contadorPalavrasAdivinhadas = 0;
+
   })
 
-  criarQuadrados();
+  teclas = document.querySelectorAll(".keyboard-row button");
 
-  let palavrasAdivinhadas = [[]];
-  let espacoDisponivel = 1;
-
-  arrayResposta = [palavra[0], palavra[1], palavra[2], palavra[3], palavra[4]]
-  let contadorPalavrasAdivinhadas = 0;
-
-  const teclas = document.querySelectorAll(".keyboard-row button");
 
   function getArrayPalavraAtual() {
     const numeroDePalavrasAdivinhadas = palavrasAdivinhadas.length;
@@ -59,6 +61,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (posicaoCorreta) {
       return "rgb(83, 141, 78)";
     }
+
+    
+    console.log(arrayPalavraAtual)
 
     for(var j = 0; j<5; j++){
       if(arrayResposta[j] == letra && palavra.charAt(j) == arrayPalavraAtual[j]){

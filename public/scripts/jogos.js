@@ -25,7 +25,6 @@ let search = async () =>{
         
             if(loginInformations != null){
                 infoCurtidas = {idWordle: data[i].idJogo, idConexo: data[i].idJogo, idUsuario: loginInformations.idUsuario, ação: "verificar"}
-                console.log(infoCurtidas)
                 verificarCurtida(`${data[i].tipo}`)
             }
         }

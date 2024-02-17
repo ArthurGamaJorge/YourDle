@@ -32,6 +32,24 @@ let criar = () =>{
     }
 }
 
+let ConexoAleatorio = () =>{
+    fetch("/conexoaleatorio", {
+        method:"GET",
+    }).then(response => response.json()) 
+    .then(data => {
+        window.location.href = `/conexo/${data}`
+    })
+}
+
+let WordleAleatorio = () =>{
+    fetch("/wordlealeatorio", {
+        method:"GET",
+    }).then(response => response.json()) 
+    .then(data => {
+        window.location.href = `/wordle/${data}`
+    })
+}
+
 let signinBtn = document.querySelector('.signinBtn');
 let signupBtn = document.querySelector('.signupBtn');
 let body = document.querySelector('body');

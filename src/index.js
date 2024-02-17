@@ -171,6 +171,18 @@ app.get('/conexo/*', async (req, res) => {
     }
   });
 
+app.get('/conexoaleatorio', async (req, res) => {
+    const jogo = await prisma.$queryRaw 
+    `SELECT TOP 1 idConexo FROM YourDle.Conexo ORDER BY NEWID()`;
+    res.json(jogo[0].idConexo)
+});
+
+app.get('/wordlealeatorio', async (req, res) => {
+  const jogo = await prisma.$queryRaw 
+  `SELECT TOP 1 idWordle FROM YourDle.Wordle ORDER BY NEWID()`;
+  res.json(jogo[0].idWordle)
+});
+
   app.post('/pegarPalavra', async (req, res) => {
         const palavra = await prisma.$queryRaw 
         `select TOP 1 palavra from YourDle.Wordle where idWordle=${req.body.idWordle}`;

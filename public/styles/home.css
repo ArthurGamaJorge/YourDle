@@ -51,8 +51,21 @@ a:visited {
     width: calc(2vmax + 20px);
 }
 
-#create{
+#wordleRandom{
     margin-right: auto;
+    margin-left: 1%;
+}
+
+#create{
+    margin-right: 1%;
+}
+
+.random{
+    filter: drop-shadow(2px 0 0 white) 
+        drop-shadow(0 2px 0 white)
+        drop-shadow(-2px 0 0 white) 
+        drop-shadow(0 -2px 0 white);
+        transition: 0.22s ease-in-out;
 }
 
 #filter{
@@ -85,6 +98,7 @@ a:visited {
 #search{
     width: 50%;
     height: 80%;
+    right: 4%;
 }
 
 .input-box {
@@ -231,6 +245,10 @@ a:visited {
 
 #dislike:hover, #sairButton:hover, .Descurtido{
     filter: invert(23%) sepia(84%) saturate(10000%) hue-rotate(359deg) brightness(91%) contrast(137%);
+}
+
+.random:hover{
+    scale: 1.1;
 }
 
 #data{
