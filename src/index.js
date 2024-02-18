@@ -93,16 +93,21 @@ app.post("/palavraValida", async(req, res) =>{
   })
 
   app.post("/publicar", async(req, res) =>{
+    console.log(req.body.palavras)
     if(savedIdUsuario == req.body.idUsuario){
         if(req.body.tipo == "Wordle"){
-            req.body.palavra = req.body.palavra.replace(/[^a-zA-Z0-9 ]/g, '');
-            if(req.body.palavra.length != 5){
-                res.json({resposta: "A palavra deve ter exatamente 5 letras sem caractéres especiais"})
-                return
-            }
+          for(var i = 0; i<req.body.palavras.length; i++){
+            if(req.body.palavras[i] != null){
+              req.body.palavras[i] = req.body.palavras[i].replace(/[^a-zA-Z0-9 ]/g, '');
 
+              if(req.body.palavras[i].length != 5){
+                res.json({resposta: "As palavras devem ter exatamente 5 letras sem caractéres especiais"})
+                return
+              }
+            }
+          }
             await prisma.$queryRaw
-            `exec YourDle.spInserirWordle ${req.body.titulo}, ${req.body.palavra}, ${req.body.idUsuario}`
+            `exec YourDle.spInserirWordle ${req.body.titulo}, ${req.body.palavras[0]}, ${req.body.palavras[1]}, ${req.body.palavras[2]}, ${req.body.palavras[3]}, ${req.body.idUsuario}`
             res.json({resposta: "sucesso"})
         } else{
             await prisma.$queryRaw
@@ -121,7 +126,7 @@ app.post("/palavraValida", async(req, res) =>{
     if (req.body.temParametroBusca) {
       query += ` ${req.body.jogoPriorizado ? "AND" : "WHERE"} CHARINDEX('${req.body.content}', titulo, 0) > 0`;
     }
-    query += ` ORDER BY ${req.body.priorizarCurtidas ? "curtida desc, descurtida, dataCriado" : "dataCriado, curtida desc, descurtida"}`;
+    query += ` ORDER BY ${req.body.priorizarCurtidas ? "curtida desc, descurtida, dataCriado" : "dataCriado desc"}`;
   
     try{
       jogos = await prisma.$queryRawUnsafe(query)
@@ -181,7 +186,7 @@ app.get('/wordlealeatorio', async (req, res) => {
 
   app.post('/pegarPalavra', async (req, res) => {
         const palavra = await prisma.$queryRaw 
-        `select TOP 1 palavra from YourDle.Wordle where idWordle=${req.body.idWordle}`;
+        `select palavra, palavra2, palavra3, palavra4 from YourDle.Wordle where idWordle=${req.body.idWordle}`;
         res.json(palavra);
   });
 

@@ -2,7 +2,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 1%;
     margin-bottom: 0%;
 }
 
@@ -15,7 +14,6 @@
   
   #game {
     width: 100%;
-    max-width: 500px;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -37,24 +35,24 @@
   
   #board-container {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
-  }
+}
   
   #board {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-gap: 5px;
-    padding: 10px;
+    padding: 20px;
     box-sizing: border-box;
   }
   
   .square {
     border: 2px solid rgb(58, 58, 60);
-    min-width: 60px;
-    min-height: 60px;
-    font-size: 50px;
+    width: 2vmax;
+    height: 2vmax;
+    font-size: 2vmax;
     font-weight: bold;
     color: gainsboro;
     text-transform: uppercase;
@@ -66,6 +64,9 @@
   
   #keyboard-container {
     height: 200px;
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
   }
   
   .keyboard-row {

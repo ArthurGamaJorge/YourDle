@@ -21,6 +21,9 @@ CREATE TABLE YourDle.Conexo(
 	REFERENCES YourDle.Usuario(idUsuario)
 )
 
+select * from YourDle.V_jogos order by dataCriado desc
+select * from YourDle.v_Jogos ORDER BY dataCriado
+
 CREATE TABLE YourDle.UsuarioConexo(
 	idUsuarioConexo INT PRIMARY KEY IDENTITY(1,1),
 	idUsuario INT NOT NULL,
@@ -36,6 +39,9 @@ CREATE TABLE YourDle.Wordle(
 	idWordle INT PRIMARY KEY IDENTITY(1,1),
 	titulo VARCHAR(50) NOT NULL,
 	palavra VARCHAR(5) NOT NULL,
+	palavra2 VARCHAR(5),
+	palavra3 VARCHAR(5),
+	palavra4 VARCHAR(5),
 	dataCriado DATE NOT NULL,
 	curtida INT NOT NULL,
 	descurtida INT NOT NULL,
@@ -58,10 +64,13 @@ CREATE TABLE YourDle.UsuarioWordle(
 CREATE OR ALTER PROCEDURE YourDle.spInserirWordle
 	@titulo AS VARCHAR(50),
     @palavra AS VARCHAR(5),
+	@palavra2 AS VARCHAR(5),
+	@palavra3 AS VARCHAR(5),
+	@palavra4 AS VARCHAR(5),
     @idUsuario AS INT
 AS
 BEGIN
-    INSERT INTO YourDle.Wordle VALUES(@titulo, @palavra, GETDATE(), 0, 0, @idUsuario);
+    INSERT INTO YourDle.Wordle VALUES(@titulo, @palavra, GETDATE(), 0, 0, @idUsuario, @palavra2, @palavra3, @palavra4);
 END
 
 CREATE OR ALTER PROCEDURE YourDle.spInserirConexo
@@ -116,7 +125,9 @@ SELECT
     W.titulo,
     W.curtida,
     W.descurtida,
-    FORMAT(W.dataCriado, 'dd/MM/yy') AS 'dataCriado',
+    W.dataCriado, 
+	W.palavra2, -- verificar se é dueto
+	W.palavra3, -- verificar se é quarteto
     U.username
 FROM
     YourDle.Wordle W
@@ -130,7 +141,9 @@ SELECT
     C.titulo,
     C.curtida,
     C.descurtida,
-    FORMAT(C.dataCriado, 'dd/MM/yy') AS 'dataCriado',
+    C.dataCriado, 
+	'conexo' as 'conexo1',
+	'conexo' as 'conexo2',
     U.username
 FROM
     YourDle.Conexo C

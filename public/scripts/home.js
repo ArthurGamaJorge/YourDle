@@ -151,8 +151,12 @@ let publicar = Tipo =>{
         infoPost = {idUsuario: loginInformations.idUsuario, tipo: "Conexo", verde: Verde, amarelo: Amarelo, azul: Azul, vermelho: Vermelho, titulo: titulo}
     
     } else{
-        palavra = document.getElementById('palavraWordle').value
-        infoPost = {idUsuario: loginInformations.idUsuario, tipo: "Wordle", palavra: palavra, titulo: titulo}
+        palavras = [null, null, null, null]
+        palavrasValores = document.querySelectorAll('#palavraWordle')
+        for(var i = 0; i<palavrasValores.length; i++){
+            palavras[i] = palavrasValores[i].value
+        }
+        infoPost = {idUsuario: loginInformations.idUsuario, tipo: "Wordle", palavras: palavras, titulo: titulo}
     }
     fetch("/publicar", {
         method:"POST",
@@ -211,4 +215,33 @@ let selecionarJogo = (tipo) =>{
     tipo.classList.add('Selecionado')
 
     search()
+}
+
+let selecionarQPalavras = (tipoPalavras) =>{
+    document.getElementById('termo').classList.remove("Selecionado")
+    document.getElementById('dueto').classList.remove("Selecionado")
+    document.getElementById('quarteto').classList.remove("Selecionado")
+    
+    tipoPalavras.classList.add('Selecionado')
+
+    palavras = document.querySelectorAll('#palavraWordle')
+    for(var j=0; j < palavras.length; j++){
+        palavras[j].parentNode.removeChild(palavras[j]); // remove todas palavras
+    }
+    containerPalavras = document.getElementById('containerPalavras')
+
+    if(tipoPalavras.id == "termo"){
+        containerPalavras.innerHTML += `<input id="palavraWordle" placeholder="Palavra" maxlength="5">`
+    }
+    if(tipoPalavras.id == "dueto"){
+        for(var i = 0; i<2; i++){
+            containerPalavras.innerHTML += `<input id="palavraWordle" placeholder="Palavra" maxlength="5">`
+        }
+        
+    }
+    if(tipoPalavras.id == "quarteto"){
+        for(var i = 0; i<4; i++){
+            containerPalavras.innerHTML += `<input id="palavraWordle" placeholder="Palavra" maxlength="5">`
+        }
+    }
 }

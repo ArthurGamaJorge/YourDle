@@ -29,7 +29,14 @@ let search = async () =>{
     .then(response => response.json()) // Converte a resposta em um objeto JavaScript
     .then(data => {
         for(var i = 0; i < data.length; i++){
-            adicionarJogo(data[i].idJogo, data[i].titulo, data[i].curtida, data[i].descurtida, data[i].dataCriado, data[i].username, data[i].tipo)
+            subtipo = ""
+            if(data[i].palavra2 != null){
+                subtipo = "dueto"
+            }
+            if(data[i].palavra3 != null){
+                subtipo = "quarteto"
+            }
+            adicionarJogo(data[i].idJogo, data[i].titulo, data[i].curtida, data[i].descurtida, data[i].dataCriado, data[i].username, data[i].tipo, subtipo)
         
             if(loginInformations != null){
                 infoCurtidas = {idWordle: data[i].idJogo, idConexo: data[i].idJogo, idUsuario: loginInformations.idUsuario, ação: "verificar"}
@@ -39,19 +46,20 @@ let search = async () =>{
     })
 }
 
-function adicionarJogo(idJogo,titulo,curtidas,descurtidas,data,username, tipo) {
+function adicionarJogo(idJogo,titulo,curtidas,descurtidas,data,username, tipo, subtipo) {
     let containerCards = document.querySelector('.containerCards')
+    dataCriado = new Date(data)
     
     conteudo = ''
     conteudo += `
-    <div class="card ${idJogo} ${tipo}${idJogo} ${tipo}">
+    <div class="card ${idJogo} ${tipo}${idJogo} ${tipo} ${subtipo}">
         <h2><a href="${tipo}/${idJogo}">${titulo}</a></h2>
         <p>${username}</p>
         <div id="capa"></div>
         <div class="interações">
             <button id="like" onclick='curtir(this); event.stopPropagation()'> <img src=Images/like.png class="curtida">  <p id='quantasCurtidas'>${curtidas}</p>  </button>
             <button id="dislike" onclick='descurtir(this); event.stopPropagation()'> <img src=Images/dislike.png class="curtida"> <p id='quantasDescurtidas'>${descurtidas}</p> </button>
-            <p id="data">${data}</p>
+            <p id="data">${dataCriado.getDate()}/${dataCriado.getMonth()}/${dataCriado.getYear()}</p>
         </div>
     </div>`
     

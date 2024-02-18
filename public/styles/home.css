@@ -215,6 +215,14 @@ a:visited {
     background-image: url('../Images/wordle.png') !important;
 }
 
+.dueto #capa{
+    background-image: url('../Images/dueto.png') !important;
+}
+
+.quarteto #capa{
+    background-image: url('../Images/quarteto.png') !important;
+}
+
 .conexo #capa{
     height: 60%;
     background-image: url('../Images/conexo.png') !important;

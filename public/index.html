@@ -89,7 +89,12 @@
 
     <section id="divCriarPost" class="Wordle" style="display: none" onclick="event.stopPropagation()">
         <button onclick="mudarSeção('retornar')" id="setaEsquerda"><img src="Images/seta.png"></button>
-        <input id="palavraWordle" placeholder="Palavra" maxlength="5"> <br>
+        <button onclick="selecionarQPalavras(this)" id="termo" class="Selecionado">Termo</button> 
+        <button onclick="selecionarQPalavras(this)" id="dueto">Dueto</button> 
+        <button onclick="selecionarQPalavras(this)" id="quarteto">Quarteto</button>
+        <div id="containerPalavras">
+            <input id="palavraWordle" placeholder="Palavra" maxlength="5"> <br>
+        </div>
         <button onclick="publicar('Wordle')">Publicar</button>
     </section>
 

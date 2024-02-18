@@ -1,7 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  palavra = ''
+  palavra = ''; palavra2 = ''; palavra3 = ''; palavra4 = ''
+  arrayResposta2 = []; arrayResposta3 = []; arrayResposta4 = []
   bloquearClique = false
+  acertos = 0
   
   infoWordle = {idWordle: (window.location.href.split("/"))[4]}
 
@@ -14,16 +16,37 @@ document.addEventListener("DOMContentLoaded", () => {
 }).then(response => response.json()) // Converte a resposta em um objeto JavaScript
   .then(data => {
     palavra = data[0].palavra.toLowerCase()
+    try{
+      palavra2 = data[0].palavra2.toLowerCase()
+      arrayResposta2 = [palavra2[0], palavra2[1], palavra2[2], palavra2[3], palavra2[4]]
 
-    criarQuadrados();
+      palavra3 = data[0].palavra3.toLowerCase()
+      arrayResposta3 = [palavra3[0], palavra3[1], palavra3[2], palavra3[3], palavra3[4]]
 
-    palavrasAdivinhadas = [[]];
-    espacoDisponivel = 1;
+      palavra4 = data[0].palavra4.toLowerCase()
+      arrayResposta4 = [palavra4[0], palavra4[1], palavra4[2], palavra4[3], palavra4[4]]
+    } catch{
+      console.log("não quarteto")
+    }
+    quantasPalavras = 1
+    if(palavra2 != ''){
+      quantasPalavras = 2
+    }
+    if(palavra4 != ''){
+      quantasPalavras = 4
+    }
 
-    arrayResposta = [palavra[0], palavra[1], palavra[2], palavra[3], palavra[4]]
-    contadorPalavrasAdivinhadas = 0;
+      criarQuadrados();
 
-  })
+      palavrasAdivinhadas = [[]];
+      espacoDisponivel = 1;
+
+      arrayResposta = [palavra[0], palavra[1], palavra[2], palavra[3], palavra[4]]
+      arrayRespostas = [arrayResposta, arrayResposta2, arrayResposta3, arrayResposta4]
+      palavras = [palavra, palavra2, palavra3, palavra4]
+      contadorPalavrasAdivinhadas = 0;
+    }
+  )
 
   teclas = document.querySelectorAll(".keyboard-row button");
 
@@ -39,36 +62,39 @@ document.addEventListener("DOMContentLoaded", () => {
     if (arrayPalavraAtual && arrayPalavraAtual.length < 5) {
       arrayPalavraAtual.push(letra);
 
-      const elementoEspacoDisponivel = document.getElementById(String(espacoDisponivel));
-
-      espacoDisponivel = espacoDisponivel + 1;
-      elementoEspacoDisponivel.textContent = letra;
+      for(var i = 0; i<quantasPalavras; i++){
+        if(document.querySelector(`.board${i} #q${espacoDisponivel}`) != null){
+          const elementoEspacoDisponivel = document.querySelector(`.board${i} #q${espacoDisponivel}`);
+          elementoEspacoDisponivel.textContent = letra;
+        }
+      }
+      espacoDisponivel +=  1;
     }
   }
 
-  function obterCorDoQuadrado(letra, indice) {
-
-    const letraCorreta = palavra.includes(letra);
+  function obterCorDoQuadrado(letra, indice, palavra) {
+    if(palavra == 1){
+      console.log('aaaa')
+    }
+    const letraCorreta = palavras[palavra].includes(letra);
 
     if (!letraCorreta) {
       document.getElementById(`${letra}`).style = "background-color: rgb(58, 58, 60)"
       return "rgb(58, 58, 60)";
     }
 
-    const letraNaquelaPosicao = palavra.charAt(indice);
+    const letraNaquelaPosicao = palavras[palavra].charAt(indice);
     const posicaoCorreta = letra === letraNaquelaPosicao;
 
     if (posicaoCorreta) {
       return "rgb(83, 141, 78)";
     }
 
-    
-    console.log(arrayPalavraAtual)
 
     for(var j = 0; j<5; j++){
-      if(arrayResposta[j] == letra && palavra.charAt(j) == arrayPalavraAtual[j]){
-          if(arrayPalavraAtual[j] == letra && ocorrênciasResposta[j] > 1){
-            ocorrênciasResposta[j] -= 1
+      if(arrayRespostas[palavra][j] == letra && palavras[palavra].charAt(j) == arrayPalavraAtual[j]){
+          if(arrayPalavraAtual[j] == letra && ocorrêciasRespostas[palavra][j] > 1){
+            ocorrêciasRespostas[palavra][j] -= 1
             return "rgb(181, 159, 59)"
           }           
             return "rgb(58, 58, 60)"
@@ -82,7 +108,7 @@ const itemCounter = (value, index) => {
   return value.filter((x) => x == index).length;
 };
 
-  function enviarPalavra() {
+ function enviarPalavra() {
     bloquearClique = true
     arrayPalavraAtual = getArrayPalavraAtual();
     if (arrayPalavraAtual.length !== 5) {
@@ -105,30 +131,43 @@ const itemCounter = (value, index) => {
         const intervalo = 200;
 
         ocorrênciasResposta = [itemCounter(arrayResposta, arrayResposta[0]), itemCounter(arrayResposta, arrayResposta[1]), itemCounter(arrayResposta, arrayResposta[2]) ,itemCounter(arrayResposta, arrayResposta[3]), itemCounter(arrayResposta, arrayResposta[4])]
-      
-        arrayPalavraAtual.forEach((letra, indice) => {
-          setTimeout(() => {
-
-            const corQuadrado = obterCorDoQuadrado(letra, indice);
-
-
-            const idLetra = primeiroIdLetra + indice;
-            const elementoLetra = document.getElementById(idLetra);
-            elementoLetra.classList.add("animate__flipInX");
-            elementoLetra.style = `background-color:${corQuadrado};border-color:${corQuadrado}`;
-          }, intervalo * indice);
-        });
+        ocorrênciasResposta2 = [itemCounter(arrayResposta2, arrayResposta2[0]), itemCounter(arrayResposta2, arrayResposta2[1]), itemCounter(arrayResposta2, arrayResposta2[2]) ,itemCounter(arrayResposta2, arrayResposta2[3]), itemCounter(arrayResposta2, arrayResposta2[4])]
+        ocorrênciasResposta3 = [itemCounter(arrayResposta3, arrayResposta3[0]), itemCounter(arrayResposta3, arrayResposta3[1]), itemCounter(arrayResposta3, arrayResposta3[2]) ,itemCounter(arrayResposta3, arrayResposta3[3]), itemCounter(arrayResposta3, arrayResposta3[4])]
+        ocorrênciasResposta4 = [itemCounter(arrayResposta4, arrayResposta4[0]), itemCounter(arrayResposta4, arrayResposta4[1]), itemCounter(arrayResposta4, arrayResposta4[2]) ,itemCounter(arrayResposta4, arrayResposta4[3]), itemCounter(arrayResposta4, arrayResposta4[4])]
+        ocorrêciasRespostas = [ocorrênciasResposta, ocorrênciasResposta2, ocorrênciasResposta3, ocorrênciasResposta4]
+        
+        for (var k = 0; k < quantasPalavras; k++) {
+          arrayPalavraAtual.forEach((letra, indice) => {
+        
+              const corQuadrado = obterCorDoQuadrado(letra, indice, k);
+              const idLetra = primeiroIdLetra + indice;
+              const elementoLetra = document.querySelector(`.board${k} #q${idLetra}`);
+              if(elementoLetra != null){
+                elementoLetra.classList.add("animate__flipInX");
+              elementoLetra.style = `background-color:${corQuadrado};border-color:${corQuadrado}`;
+              }
+          });
+        }
+        
 
         contadorPalavrasAdivinhadas += 1;
 
-        if (palavrasAdivinhadas.length === 6) {
+        if (palavrasAdivinhadas.length === 5 + quantasPalavras) {
           window.alert(`Desculpe, você não tem mais tentativas! A palavra era ${palavra}.`);
         }
 
         palavrasAdivinhadas.push([]);
 
-        if (palavraAtual === palavra) {
-          window.alert("Parabéns!");
+        for(var i = 0; i<quantasPalavras; i++){
+          if(palavraAtual == palavras[i]){
+            acertos += 1
+            boards = document.querySelectorAll('#board')
+            boards[i].classList.remove('board' + i)
+            if(acertos == quantasPalavras){
+              window.alert("Parabéns, você ganhou")
+              bloquearClique = true;
+            }
+          }
         }
         
       } 
@@ -137,21 +176,26 @@ const itemCounter = (value, index) => {
      }
     
     });
-    if (palavraAtual != palavra){
+    if (acertos < quantasPalavras){
       bloquearClique = false
     }
   }
 
   function criarQuadrados() {
-    const quadroJogo = document.getElementById("board");
+    const containerQuadroJogo = document.getElementById('board-container')
 
-    for (let indice = 0; indice < 30; indice++) {
-      let quadrado = document.createElement("div");
-      quadrado.classList.add("square");
-      quadrado.classList.add("animate__animated");
-      quadrado.setAttribute("id", indice + 1);
-      quadroJogo.appendChild(quadrado);
-    }
+      for(let j = 0; j<quantasPalavras; j++){
+        containerQuadroJogo.innerHTML += `<div id="board" class="board${j}"></div>`
+        let quadroJogo = document.querySelector(".board" + j)
+
+        for (let indice = 0; indice < 30 + (quantasPalavras-1)*5; indice++) {
+          let quadrado = document.createElement("div");
+          quadrado.classList.add("square");
+          quadrado.classList.add("animate__animated");
+          quadrado.setAttribute("id", "q" + parseInt(indice + 1));
+          quadroJogo.appendChild(quadrado);
+        }
+      }
   }
 
   function deletarLetra() {
@@ -163,11 +207,16 @@ const itemCounter = (value, index) => {
     arrayPalavraAtual.pop();
     palavrasAdivinhadas[palavrasAdivinhadas.length - 1] = arrayPalavraAtual;
 
-    const ultimaLetraElemento = document.getElementById(String(espacoDisponivel - 1));
-
-    ultimaLetraElemento.textContent = "";
-    espacoDisponivel = espacoDisponivel - 1;
+    for(var i = 0; i<quantasPalavras; i++){
+      if(document.querySelector(`.board${i} #q${espacoDisponivel - 1}`) != null){
+        const ultimaLetraElemento = document.querySelector(`.board${i} #q${espacoDisponivel - 1}`);
+      ultimaLetraElemento.textContent = '';
+      }
+      
+    }
+    espacoDisponivel -=  1;
   }
+
 
   document.addEventListener("keydown", (evento) => {
     const tecla = evento.key.toLowerCase(); 
