@@ -1,6 +1,7 @@
 let search = async () =>{
-    let temParametroBusca = false; let priorizarCurtidas = false;
+    let temParametroBusca = false; let priorizarCurtidas = false; let jogoPriorizado = null;
     conteudo = document.getElementById('searchContent').value
+
     if(conteudo != ""){
         temParametroBusca = true
     }
@@ -12,7 +13,14 @@ let search = async () =>{
     if(document.getElementById('curtidas').classList[0] == "Selecionado"){
         priorizarCurtidas = true
     }
-    informações = {content: conteudo, temParametroBusca: temParametroBusca, priorizarCurtidas: priorizarCurtidas}
+    if(document.getElementById('buscarWordle').classList[0] == "Selecionado"){
+        jogoPriorizado = "wordle"
+    }
+    if(document.getElementById('buscarConexo').classList[0] == "Selecionado"){
+        jogoPriorizado = "conexo"
+    }
+
+    informações = {content: conteudo, temParametroBusca: temParametroBusca, priorizarCurtidas: priorizarCurtidas, jogoPriorizado: jogoPriorizado}
     fetch("/search", {
         method:"POST",
         headers:{"Content-type": "application/json"},
@@ -24,6 +32,7 @@ let search = async () =>{
             adicionarJogo(data[i].idJogo, data[i].titulo, data[i].curtida, data[i].descurtida, data[i].dataCriado, data[i].username, data[i].tipo)
         
             if(loginInformations != null){
+                console.log(data[i].tipo)
                 infoCurtidas = {idWordle: data[i].idJogo, idConexo: data[i].idJogo, idUsuario: loginInformations.idUsuario, ação: "verificar"}
                 verificarCurtida(`${data[i].tipo}`)
             }

@@ -195,3 +195,20 @@ let selecionar = (filtro) =>{
     filtro.classList.add('Selecionado')
     search()
 }
+
+let selecionarJogo = (tipo) =>{
+
+    if(tipo.classList[0] == "Selecionado"){
+        tipo.classList.remove('Selecionado')
+        search()
+        return
+    }
+
+    document.getElementById('buscarWordle').classList.remove("Selecionado")
+    document.getElementById('buscarConexo').classList.remove("Selecionado")
+
+
+    tipo.classList.add('Selecionado')
+
+    search()
+}

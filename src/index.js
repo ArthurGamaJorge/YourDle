@@ -113,26 +113,24 @@ app.post("/palavraValida", async(req, res) =>{
   })
 
   app.post("/search", async(req, res) =>{
-    jogos = ''
-    if(req.body.priorizarCurtidas){
-        if(!req.body.temParametroBusca){
-            jogos = await prisma.$queryRaw
-            `select * from YourDle.v_Jogos order by curtida DESC`
-        } else{
-            jogos = await prisma.$queryRaw
-            `select * from YourDle.v_Jogos where CHARINDEX(${req.body.content}, titulo, 0) > 0 order by curtida DESC`;
-        }
-        res.json(jogos)
-    } else{
-        if(!req.body.temParametroBusca){
-            jogos = await prisma.$queryRaw
-            `select * from YourDle.v_Jogos order by dataCriado DESC`
-        } else{
-            jogos = await prisma.$queryRaw
-            `select * from YourDle.v_Jogos where CHARINDEX(${req.body.content}, titulo, 0) > 0 order by dataCriado DESC`;
-        }
-        res.json(jogos)
+    query = `select * from YourDle.v_Jogos`
+
+    if (req.body.jogoPriorizado != null) {
+      query += ` WHERE tipo = '${req.body.jogoPriorizado}'`;
     }
+    if (req.body.temParametroBusca) {
+      query += ` ${req.body.jogoPriorizado ? "AND" : "WHERE"} CHARINDEX('${req.body.content}', titulo, 0) > 0`;
+    }
+    query += ` ORDER BY ${req.body.priorizarCurtidas ? "curtida desc, descurtida, dataCriado" : "dataCriado, curtida desc, descurtida"}`;
+
+    console.log(query)
+  
+    try{
+      jogos = await prisma.$queryRawUnsafe(query)
+    } catch{
+      jogos = {}
+    }
+      res.json(jogos)
 })
 
 app.get('/wordle/*', async (req, res) => {
