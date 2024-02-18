@@ -73,13 +73,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function obterCorDoQuadrado(letra, indice, palavra) {
-    if(palavra == 1){
-      console.log('aaaa')
-    }
     const letraCorreta = palavras[palavra].includes(letra);
 
     if (!letraCorreta) {
-      document.getElementById(`${letra}`).style = "background-color: rgb(58, 58, 60)"
       return "rgb(58, 58, 60)";
     }
 
