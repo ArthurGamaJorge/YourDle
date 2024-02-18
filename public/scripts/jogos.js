@@ -32,7 +32,6 @@ let search = async () =>{
             adicionarJogo(data[i].idJogo, data[i].titulo, data[i].curtida, data[i].descurtida, data[i].dataCriado, data[i].username, data[i].tipo)
         
             if(loginInformations != null){
-                console.log(data[i].tipo)
                 infoCurtidas = {idWordle: data[i].idJogo, idConexo: data[i].idJogo, idUsuario: loginInformations.idUsuario, ação: "verificar"}
                 verificarCurtida(`${data[i].tipo}`)
             }
@@ -98,16 +97,14 @@ let curtir = ButtonCurtir =>{
             curtidas.innerHTML = Number(curtidas.textContent) - 1
 
             ButtonCurtir.classList.remove('Curtido')
-            ação = "tirarCurtida"
 
         } else{
             curtidas.innerHTML = Number(curtidas.textContent) + 1
             if(Buttondescurtir.classList.contains('Descurtido')){descurtidas.innerHTML = Number(descurtidas.textContent) - 1}
             ButtonCurtir.classList.add('Curtido')
             Buttondescurtir.classList.remove('Descurtido')
-            ação = "curtir"
         }
-        informações = {idUsuario: loginInformations.idUsuario, idWordle: id.classList[1], idConexo: id.classList[1], ação: ação}
+        informações = {idUsuario: loginInformations.idUsuario, idWordle: id.classList[1], idConexo: id.classList[1], ação: "curtir"}
         
         fetch(`/curtidas${id.classList[3]}`, {
             method:"POST",
@@ -133,7 +130,6 @@ let descurtir = Buttondescurtir =>{
             descurtidas.innerHTML = Number(descurtidas.textContent) - 1
 
             Buttondescurtir.classList.remove('Descurtido')
-            ação = "tirarDescurtida"
         } else{
             if(ButtonCurtir.classList.contains('Curtido')){
                 curtidas.innerHTML = Number(curtidas.textContent) - 1
@@ -143,10 +139,9 @@ let descurtir = Buttondescurtir =>{
 
             Buttondescurtir.classList.add('Descurtido')
             ButtonCurtir.classList.remove('Curtido')
-            ação = "descurtir"
         }
 
-        informações = {idUsuario: loginInformations.idUsuario, idWordle: id.classList[1], idConexo: id.classList[1], ação: ação}
+        informações = {idUsuario: loginInformations.idUsuario, idWordle: id.classList[1], idConexo: id.classList[1], ação: "descurtir"}
         
         fetch(`/curtidas${id.classList[3]}`, {
             method:"POST",

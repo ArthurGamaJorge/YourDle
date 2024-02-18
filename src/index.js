@@ -122,8 +122,6 @@ app.post("/palavraValida", async(req, res) =>{
       query += ` ${req.body.jogoPriorizado ? "AND" : "WHERE"} CHARINDEX('${req.body.content}', titulo, 0) > 0`;
     }
     query += ` ORDER BY ${req.body.priorizarCurtidas ? "curtida desc, descurtida, dataCriado" : "dataCriado, curtida desc, descurtida"}`;
-
-    console.log(query)
   
     try{
       jogos = await prisma.$queryRawUnsafe(query)
@@ -214,7 +212,7 @@ app.post("/curtidaswordle", async(req, res) =>{
           `select * from YourDle.UsuarioWordle where idUsuario = ${req.body.idUsuario} and idWordle = ${req.body.idWordle}`;
         
       if(existeInteração != ""){
-        if(req.body.ação == "descurtir"){
+        if(req.body.ação == "descurtir" && existeInteração[0].curtido != 0){
             await prisma.$queryRaw
             ` UPDATE YourDle.UsuarioWordle set curtido = 0 where idUsuarioWordle = ${existeInteração[0].idUsuarioWordle}`
             
@@ -227,14 +225,14 @@ app.post("/curtidaswordle", async(req, res) =>{
             `;
 
         } 
-        if(req.body.ação == "tirarDescurtida"){
+        if(req.body.ação == "descurtir" && existeInteração[0].curtido == 0){
           await prisma.$queryRaw`
            UPDATE YourDle.UsuarioWordle set curtido = null where idUsuarioWordle = ${existeInteração[0].idUsuarioWordle};
           UPDATE YourDle.Wordle set descurtida -= 1 where idWordle = ${req.body.idWordle};
         `;
         }
 
-        if(req.body.ação == "curtir"){
+        if(req.body.ação == "curtir" && existeInteração[0].curtido != 1){
           await prisma.$queryRaw
           ` UPDATE YourDle.UsuarioWordle set curtido = 1 where idUsuarioWordle = ${existeInteração[0].idUsuarioWordle};`
           
@@ -246,20 +244,14 @@ app.post("/curtidaswordle", async(req, res) =>{
           `UPDATE YourDle.Wordle set curtida += 1 where idWordle = ${req.body.idWordle}`
         } 
         
-        if(req.body.ação == "tirarCurtida"){
+        if(req.body.ação == "curtir" && existeInteração[0].curtido == 1){
           await prisma.$queryRaw`
             UPDATE YourDle.UsuarioWordle set curtido = null where idUsuarioWordle = ${existeInteração[0].idUsuarioWordle};
             UPDATE YourDle.Wordle set curtida -= 1 where idWordle = ${req.body.idWordle};
         `
         }}
       else{
-          opção = -1
-          if(req.body.ação == "descurtir"){
-            opção = 0
-          } 
-          if(req.body.ação == "tirarDescurtida" || req.body.ação == "tirarCurtida"){
-            opção = null
-          }
+          opção = 0
           if(req.body.ação == "curtir"){
             opção = 1
           } 
@@ -296,7 +288,7 @@ app.post("/curtidasconexo", async(req, res) =>{
           `select * from YourDle.UsuarioConexo where idUsuario = ${req.body.idUsuario} and idConexo = ${req.body.idConexo}`;
         
       if(existeInteração != ""){
-        if(req.body.ação == "descurtir"){
+        if(req.body.ação == "descurtir" && existeInteração[0].curtido != 0){
             await prisma.$queryRaw
             `UPDATE YourDle.UsuarioConexo set curtido = 0 where idUsuarioConexo = ${existeInteração[0].idUsuarioConexo}`
             
@@ -309,14 +301,14 @@ app.post("/curtidasconexo", async(req, res) =>{
             `;
 
         } 
-        if(req.body.ação == "tirarDescurtida"){
+        if(req.body.ação == "descurtir" && existeInteração[0].curtido == 0){
           await prisma.$queryRaw`
           UPDATE YourDle.UsuarioConexo set curtido = null where idUsuarioConexo = ${existeInteração[0].idUsuarioConexo};
           UPDATE YourDle.Conexo set descurtida -= 1 where idConexo = ${req.body.idConexo};
         `;
         }
 
-        if(req.body.ação == "curtir"){
+        if(req.body.ação == "curtir" && existeInteração[0].curtido != 1){
           await prisma.$queryRaw
           `UPDATE YourDle.UsuarioConexo set curtido = 1 where idUsuarioConexo = ${existeInteração[0].idUsuarioConexo}`
           
@@ -328,20 +320,14 @@ app.post("/curtidasconexo", async(req, res) =>{
           `UPDATE YourDle.Conexo set curtida += 1 where idConexo = ${req.body.idConexo}`
         } 
         
-        if(req.body.ação == "tirarCurtida"){
+        if(req.body.ação == "curtir" && existeInteração[0].curtido == 1){
           await prisma.$queryRaw`
             UPDATE YourDle.UsuarioConexo set curtido = null where idUsuarioConexo = ${existeInteração[0].idUsuarioConexo};
             UPDATE YourDle.Conexo set curtida -= 1 where idConexo = ${req.body.idConexo};
         `
         }}
       else{
-          opção = -1
-          if(req.body.ação == "descurtir"){
-            opção = 0
-          } 
-          if(req.body.ação == "tirarDescurtida" || req.body.ação == "tirarCurtida"){
-            opção = null
-          }
+          opção = 0
           if(req.body.ação == "curtir"){
             opção = 1
           } 
