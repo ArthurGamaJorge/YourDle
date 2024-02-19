@@ -149,7 +149,11 @@ const itemCounter = (value, index) => {
         contadorPalavrasAdivinhadas += 1;
 
         if (palavrasAdivinhadas.length === 5 + quantasPalavras) {
-          window.alert(`Desculpe, você não tem mais tentativas! A palavra era ${palavra}.`);
+          respostas = ''
+          for(var i = 0; i < quantasPalavras; i++){
+            respostas += palavras[i] + ' '
+          }
+          window.alert(`Desculpe, você não tem mais tentativas! A resposta era ${respostas}.`);
         }
 
         palavrasAdivinhadas.push([]);
