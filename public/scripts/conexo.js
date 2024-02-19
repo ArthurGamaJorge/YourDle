@@ -14,7 +14,7 @@ window.onload = () =>{
     verde = {itens: data[0].verde.split(",").slice(0, 4), desc: data[0].verde.split(",")[4]}
     azul = {itens: data[0].azul.split(",").slice(0, 4), desc: data[0].azul.split(",")[4]}
     vermelho = {itens: data[0].vermelho.split(",").slice(0, 4), desc: data[0].vermelho.split(",")[4]}
-    amarelo = {itens: data[0].amarelo.split(",").slice(0, 4), desc: data[0].amarelo.split(",")}
+    amarelo = {itens: data[0].amarelo.split(",").slice(0, 4), desc: data[0].amarelo.split(",")[4]}
 
     atualizarBoard()
   })

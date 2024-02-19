@@ -143,6 +143,7 @@ let mudarSeção = ação =>{
 
 let publicar = Tipo =>{
     titulo = document.getElementById('titulo').value
+    infoPost = {}
     if(Tipo == "Conexo"){
         Verde = [document.getElementById('Verde1').value, document.getElementById('Verde2').value, document.getElementById('Verde3').value, document.getElementById('Verde4').value].sort() + "," + [document.getElementById('VerdeDesc').value]
         Amarelo = [document.getElementById('Amarelo1').value, document.getElementById('Amarelo2').value, document.getElementById('Amarelo3').value, document.getElementById('Amarelo4').value].sort() + "," + [ document.getElementById('AmareloDesc').value]
