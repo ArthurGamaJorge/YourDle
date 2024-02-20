@@ -122,7 +122,13 @@ const itemCounter = (value, index) => {
     })
     .then(response => response.json())
     .then(data => {
-      if (data.resposta === true || palavraAtual === palavra) {
+      valido = false
+      for(var i = 0; i<quantasPalavras; i++){
+        if(palavras[i] == palavraAtual){
+          valido = true
+        }
+      }
+      if (data.resposta === true || valido) {
         const primeiroIdLetra = contadorPalavrasAdivinhadas * 5 + 1;
         const intervalo = 200;
 
