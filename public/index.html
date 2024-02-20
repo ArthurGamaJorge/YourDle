@@ -95,7 +95,7 @@
         <div id="containerPalavras">
             <input id="palavraWordle" placeholder="Palavra" maxlength="5"> <br>
         </div>
-        <button onclick="publicar('Wordle')">Publicar</button>
+        <button onclick="publicar('Wordle')" id="publicarWordle">Publicar</button>
     </section>
 
     <section id="divCriarPost" class="Conexo" style="display: none" onclick="event.stopPropagation()">
@@ -123,7 +123,7 @@
         <input placeholder="Primeira palavra" id="Vermelho1"> <input placeholder="Segunda palavra" id="Vermelho2"> <input placeholder="Terceira palavra" id="Vermelho3"> <input placeholder="Quarta palavra" id="Vermelho4"><br>
         <input placeholder="Descrição" id="VermelhoDesc"> <br><br><br>
 
-        <button onclick="publicar('Conexo')">Publicar</button> <br>
+        <button onclick="publicar('Conexo')" id="publicarConexo">Publicar</button> <br>
     </section>
 
     <button onclick="sair(); event.stopPropagation()" id="sairButton"> <img src="Images/sair.png"> </button>
