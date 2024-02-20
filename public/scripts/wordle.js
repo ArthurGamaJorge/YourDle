@@ -130,7 +130,6 @@ const itemCounter = (value, index) => {
       }
       if (data.resposta === true || valido) {
         const primeiroIdLetra = contadorPalavrasAdivinhadas * 5 + 1;
-        const intervalo = 200;
 
         ocorrênciasResposta = [itemCounter(arrayResposta, arrayResposta[0]), itemCounter(arrayResposta, arrayResposta[1]), itemCounter(arrayResposta, arrayResposta[2]) ,itemCounter(arrayResposta, arrayResposta[3]), itemCounter(arrayResposta, arrayResposta[4])]
         ocorrênciasResposta2 = [itemCounter(arrayResposta2, arrayResposta2[0]), itemCounter(arrayResposta2, arrayResposta2[1]), itemCounter(arrayResposta2, arrayResposta2[2]) ,itemCounter(arrayResposta2, arrayResposta2[3]), itemCounter(arrayResposta2, arrayResposta2[4])]
@@ -154,7 +153,7 @@ const itemCounter = (value, index) => {
 
         contadorPalavrasAdivinhadas += 1;
 
-        if (palavrasAdivinhadas.length === 5 + quantasPalavras) {
+        if (palavrasAdivinhadas.length === 5 + quantasPalavras && !valido) {
           respostas = ''
           for(var i = 0; i < quantasPalavras; i++){
             respostas += palavras[i] + ' '
