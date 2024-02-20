@@ -186,13 +186,13 @@ app.get('/wordlealeatorio', async (req, res) => {
 
   app.post('/pegarPalavra', async (req, res) => {
         const palavra = await prisma.$queryRaw 
-        `select palavra, palavra2, palavra3, palavra4 from YourDle.Wordle where idWordle=${req.body.idWordle}`;
+        `select titulo, palavra, palavra2, palavra3, palavra4 from YourDle.Wordle where idWordle=${req.body.idWordle}`;
         res.json(palavra);
   });
 
   app.post('/pegarGrupos', async (req, res) => {
     const grupos = await prisma.$queryRaw 
-    `select verde, amarelo, azul, vermelho from YourDle.Conexo where idConexo=${req.body.idConexo}`;
+    `select titulo, verde, amarelo, azul, vermelho from YourDle.Conexo where idConexo=${req.body.idConexo}`;
     res.json(grupos);
 });
 

@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     body:JSON.stringify(infoWordle)
 }).then(response => response.json()) // Converte a resposta em um objeto JavaScript
   .then(data => {
+    document.getElementById('titulo').textContent = data[0].titulo + ' - wordle'
     palavra = data[0].palavra.toLowerCase()
     try{
       palavra2 = data[0].palavra2.toLowerCase()
