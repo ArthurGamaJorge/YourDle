@@ -93,7 +93,6 @@ app.post("/palavraValida", async(req, res) =>{
   })
 
   app.post("/publicar", async(req, res) =>{
-    console.log(req.body.palavras)
     if(savedIdUsuario == req.body.idUsuario){
         if(req.body.tipo == "Wordle"){
           for(var i = 0; i<req.body.palavras.length; i++){
