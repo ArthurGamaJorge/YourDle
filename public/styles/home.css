@@ -242,6 +242,15 @@ a:visited {
     bottom: 1%;
 }
 
+#publicarWordle, #publicarConexo{
+    font-size: 20px;
+}
+
+#publicarWordle img, #publicarConexo img{
+    height: 20px;
+    width: auto;
+}
+
 
 .curtida{
     width: calc(1vmax + 5px);

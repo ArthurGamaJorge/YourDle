@@ -144,8 +144,12 @@ let mudarSeção = ação =>{
 let publicar = Tipo =>{
     titulo = document.getElementById('titulo').value
     infoPost = {}
+
     document.getElementById('publicarWordle').disabled = true
     document.getElementById('publicarConexo').disabled = true
+    document.getElementById('publicarWordle').innerHTML += `<img src="https://cdn.pixabay.com/animation/2023/10/08/03/19/03-19-26-213_512.gif"/>`
+    document.getElementById('publicarConexo').innerHTML += `<img src="https://cdn.pixabay.com/animation/2023/10/08/03/19/03-19-26-213_512.gif"/>`
+
     if(Tipo == "Conexo"){
         Verde = [document.getElementById('Verde1').value, document.getElementById('Verde2').value, document.getElementById('Verde3').value, document.getElementById('Verde4').value].sort() + "," + [document.getElementById('VerdeDesc').value]
         Amarelo = [document.getElementById('Amarelo1').value, document.getElementById('Amarelo2').value, document.getElementById('Amarelo3').value, document.getElementById('Amarelo4').value].sort() + "," + [ document.getElementById('AmareloDesc').value]
@@ -161,6 +165,8 @@ let publicar = Tipo =>{
         }
         infoPost = {idUsuario: loginInformations.idUsuario, tipo: "Wordle", palavras: palavras, titulo: titulo}
     }
+
+try{
     fetch("/publicar", {
         method:"POST",
         headers:{
@@ -177,6 +183,9 @@ let publicar = Tipo =>{
             location.reload()
         }
     })
+    } catch{
+        publicar()
+    }
 }
 
 let sair = () =>{
