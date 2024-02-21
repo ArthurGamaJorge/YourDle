@@ -116,6 +116,7 @@ app.post("/palavraValida", async(req, res) =>{
     }
   })
 
+
   app.post("/search", async(req, res) =>{
     query = `select * from YourDle.v_Jogos`
 
