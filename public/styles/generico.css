@@ -56,6 +56,7 @@ hr{
 
 .box h1{
     font-size: calc(1.5vmax + 15px);
+    text-align: center;
 }
 
 .box img{

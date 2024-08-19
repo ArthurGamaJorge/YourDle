@@ -144,7 +144,7 @@ let mudarSeção = ação =>{
 let publicar = Tipo =>{
     titulo = document.getElementById('titulo').value
     infoPost = {}
-    
+
     if(Tipo == "Conexo"){
         Verde = [document.getElementById('Verde1').value, document.getElementById('Verde2').value, document.getElementById('Verde3').value, document.getElementById('Verde4').value].sort() + "," + [document.getElementById('VerdeDesc').value]
         Amarelo = [document.getElementById('Amarelo1').value, document.getElementById('Amarelo2').value, document.getElementById('Amarelo3').value, document.getElementById('Amarelo4').value].sort() + "," + [ document.getElementById('AmareloDesc').value]
@@ -167,10 +167,8 @@ let publicar = Tipo =>{
             "Content-type": "application/json"
         },
         body:JSON.stringify(infoPost)
-    }).then(response => response.json()) // Converte a resposta em um objeto JavaScript
+    }).then(response => response.json()) 
       .then(data => {
-        document.getElementById('publicarWordle').disabled = false
-        document.getElementById('publicarConexo').disabled = false
         if(data.resposta != "sucesso"){
             alert(data.resposta)
         } else{

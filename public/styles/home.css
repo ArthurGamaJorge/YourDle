@@ -193,6 +193,7 @@ a:visited {
 
 
 .card{
+    overflow: hidden;
     position: relative;
     height: calc(12vmax + 80px);
     border: 1px solid white;
@@ -460,3 +461,16 @@ a:visited {
 #ConfirmarSaidaButton:active{
     scale: 0.9
 }
+
+@media (max-width: 800px) {
+    .containerCards{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); 
+    }
+  }
+  
+  @media (max-width: 500px) {
+    .containerCards{
+        display: flex;
+    }
+  }
