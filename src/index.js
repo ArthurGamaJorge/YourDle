@@ -33,7 +33,7 @@ app.get("/wordle", function(req, res){
     res.sendFile(path.join(__dirname, '../public/wordle.html'));
 })
 
-savedIdUsuario = null
+let savedIdUsuario = null
 
 const fs = require('fs');
 const readline = require('readline');
@@ -114,7 +114,7 @@ app.post("/palavraValida", async(req, res) =>{
             res.json({resposta: "sucesso"})
         }
     } else{
-      res.json({resposta: [req.body, savedIdUsuario]})
+      res.json({resposta: "Falha na verificação de login"})
     }
   })
 

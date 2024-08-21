@@ -103,8 +103,9 @@ let logar = infoLogin =>{
             "Content-type": "application/json"
         },
         body:JSON.stringify(infoLogin)
-    }).then(response => response.json()) // Converte a resposta em um objeto JavaScript
+    }).then(response => response.json()) 
       .then(data => {
+        console.log("Login foi feito")
         if(data.resposta != "sucesso"){
             alert("Informações incorretas")
         } else{
@@ -170,7 +171,6 @@ let publicar = Tipo =>{
       .then(data => {
         if(data.resposta != "sucesso"){
             alert(data.resposta)
-            console.log(data.resposta)
         } else{
             location.reload()
         }
