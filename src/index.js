@@ -33,10 +33,12 @@ app.get("/wordle", function(req, res){
     res.sendFile(path.join(__dirname, '../public/wordle.html'));
 })
 
-let savedIdUsuario = null
-
 const fs = require('fs');
 const readline = require('readline');
+
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
 
 app.post("/palavraValida", async(req, res) =>{
     const readLine = readline.createInterface({
@@ -85,7 +87,10 @@ app.post("/palavraValida", async(req, res) =>{
     `select * from YourDle.Usuario where username = ${req.body.username} and senha = ${req.body.senha}`
 
     if(usuario.length != 0){
-        savedIdUsuario = usuario[0].idUsuario
+      res.cookie('savedIdUsuario', usuario[0].idUsuario, {
+        httpOnly: true, 
+        maxAge: 24 * 60 * 60 * 1000 
+      });
         res.json({resposta: "sucesso", info: usuario[0]})
     } else{
         res.json({resposta: "fracasso"})
@@ -93,7 +98,7 @@ app.post("/palavraValida", async(req, res) =>{
   })
 
   app.post("/publicar", async(req, res) =>{
-    if(savedIdUsuario == req.body.idUsuario){
+    if(req.cookies.savedIdUsuario == req.body.idUsuario){
         if(req.body.tipo == "Wordle"){
           for(var i = 0; i<req.body.palavras.length; i++){
             if(req.body.palavras[i] != null){
@@ -214,7 +219,7 @@ app.post("/curtidaswordle", async(req, res) =>{
       return
     }
   
-  if(savedIdUsuario == req.body.idUsuario){
+  if(req.cookies.savedIdUsuario == req.body.idUsuario){
       const existeInteração = await prisma.$queryRaw
           `select * from YourDle.UsuarioWordle where idUsuario = ${req.body.idUsuario} and idWordle = ${req.body.idWordle}`;
         
@@ -290,7 +295,7 @@ app.post("/curtidasconexo", async(req, res) =>{
       return
     }
   
-  if(savedIdUsuario == req.body.idUsuario){
+  if(req.cookies.savedIdUsuario == req.body.idUsuario){
       const existeInteração = await prisma.$queryRaw
           `select * from YourDle.UsuarioConexo where idUsuario = ${req.body.idUsuario} and idConexo = ${req.body.idConexo}`;
         
