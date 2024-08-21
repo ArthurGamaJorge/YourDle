@@ -114,7 +114,7 @@ app.post("/palavraValida", async(req, res) =>{
             res.json({resposta: "sucesso"})
         }
     } else{
-      res.json({resposta: "Falha na verificação de login"})
+      res.json({resposta: [req.body, savedIdUsuario]})
     }
   })
 

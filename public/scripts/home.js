@@ -170,6 +170,7 @@ let publicar = Tipo =>{
       .then(data => {
         if(data.resposta != "sucesso"){
             alert(data.resposta)
+            console.log(data.resposta)
         } else{
             location.reload()
         }
