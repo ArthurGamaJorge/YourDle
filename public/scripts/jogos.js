@@ -47,7 +47,6 @@ let search = async () =>{
 }
 
 function adicionarJogo(idJogo,titulo,curtidas,descurtidas,data,username, tipo, subtipo) {
-    console.log(data)
     let containerCards = document.querySelector('.containerCards')
     dataCriado = new Date(data)
     
@@ -60,7 +59,7 @@ function adicionarJogo(idJogo,titulo,curtidas,descurtidas,data,username, tipo, s
         <div class="interações">
             <button id="like" onclick='curtir(this); event.stopPropagation()'> <img src=Images/like.png class="curtida">  <p id='quantasCurtidas'>${curtidas}</p>  </button>
             <button id="dislike" onclick='descurtir(this); event.stopPropagation()'> <img src=Images/dislike.png class="curtida"> <p id='quantasDescurtidas'>${descurtidas}</p> </button>
-            <p id="data">${dataCriado.getDate()}/${dataCriado.getMonth()}/${dataCriado.getFullYear().toString().slice(-2)}</p>
+            <p id="data">${dataCriado.getDate()+1}/${dataCriado.getMonth()+1}/${dataCriado.getFullYear().toString().slice(-2)}</p>
         </div>
     </div>`
     

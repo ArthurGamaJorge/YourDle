@@ -441,7 +441,9 @@ a:visited {
 .DivSair{
     text-align: center; 
     padding: 2% 4% !important;
+    text-align: center;
 }
+
 
 #ConfirmarSaidaButton {
     padding: 2%;

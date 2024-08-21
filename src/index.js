@@ -113,6 +113,8 @@ app.post("/palavraValida", async(req, res) =>{
             `exec YourDle.spInserirConexo ${req.body.titulo}, ${req.body.verde.toString()}, ${req.body.azul.toString()}, ${req.body.amarelo.toString()}, ${req.body.vermelho.toString()}, ${req.body.idUsuario}`
             res.json({resposta: "sucesso"})
         }
+    } else{
+      res.json({resposta: "Falha na verificação de login"})
     }
   })
 

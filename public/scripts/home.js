@@ -108,7 +108,6 @@ let logar = infoLogin =>{
         if(data.resposta != "sucesso"){
             alert("Informações incorretas")
         } else{
-            dataInfo = 
             localStorage.setItem("login", JSON.stringify(data.info))
             loginInformations = JSON.parse(localStorage.getItem("login"))
             fecharBox("All")
