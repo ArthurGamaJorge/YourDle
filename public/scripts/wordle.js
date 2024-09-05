@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "Content-type": "application/json"
     },
     body: JSON.stringify(infoWordle)
-  }).then(response => response.json()) // Converte a resposta em um objeto JavaScript
+  }).then(response => response.json()) 
     .then(data => {
       document.getElementById('titulo').textContent = data[0].titulo + ' - wordle';
       palavra = data[0].palavra.toLowerCase();
@@ -48,31 +48,83 @@ document.addEventListener("DOMContentLoaded", () => {
       arrayRespostas = [arrayResposta, arrayResposta2, arrayResposta3, arrayResposta4];
       palavras = [palavra, palavra2, palavra3, palavra4];
       contadorPalavrasAdivinhadas = 0;
+
+      destacarQuadrado(espacoDisponivel);
     });
 
   teclas = document.querySelectorAll(".keyboard-row button");
-  console.log(teclas)
 
   function getArrayPalavraAtual() {
     const numeroDePalavrasAdivinhadas = palavrasAdivinhadas.length;
-    return palavrasAdivinhadas[numeroDePalavrasAdivinhadas - 1];
+    const arrayPalavraAtual = palavrasAdivinhadas[numeroDePalavrasAdivinhadas - 1] || [];
+    
+    while (arrayPalavraAtual.length < 5) {
+      arrayPalavraAtual.push(null); 
+    }
+    
+    return arrayPalavraAtual;
   }
+
 
   function atualizarPalavrasAdivinhadas(letra) {
     const arrayPalavraAtual = getArrayPalavraAtual();
 
-    if (arrayPalavraAtual && arrayPalavraAtual.length < 5) {
-      arrayPalavraAtual.push(letra);
+    if (arrayPalavraAtual && espacoDisponivel >= 1) {
+        const intervaloInicio = contadorPalavrasAdivinhadas * 5;
+        const intervaloFim = intervaloInicio + 5;
+        let posicaoInserir = espacoDisponivel - 1;
 
-      for (var i = 0; i < quantasPalavras; i++) {
-        if (document.querySelector(`.board${i} #q${espacoDisponivel}`) != null) {
-          const elementoEspacoDisponivel = document.querySelector(`.board${i} #q${espacoDisponivel}`);
-          elementoEspacoDisponivel.textContent = letra;
+        if (arrayPalavraAtual[posicaoInserir % 5] !== null) {
+            posicaoInserir = intervaloInicio;
+            while (posicaoInserir < intervaloFim && arrayPalavraAtual[posicaoInserir % 5] !== null) {
+                posicaoInserir++;
+            }
+
+            if (posicaoInserir >= intervaloFim) {
+                posicaoInserir = intervaloInicio;
+                while (posicaoInserir < intervaloFim && arrayPalavraAtual[posicaoInserir % 5] !== null) {
+                    posicaoInserir++;
+                }
+            }
         }
-      }
-      espacoDisponivel += 1;
+        if (posicaoInserir < intervaloFim) {
+            arrayPalavraAtual[posicaoInserir % 5] = letra;
+
+            for (let i = 0; i <= quantasPalavras; i++) {
+                const espacoAtual = document.querySelector(`.board${i} #q${posicaoInserir + 1}`);
+                if (espacoAtual) {
+                    espacoAtual.textContent = letra || ''; 
+                }
+            }
+
+            let proximaPosicao = posicaoInserir + 1;
+
+            if (proximaPosicao >= intervaloFim) {
+                proximaPosicao = intervaloInicio;
+            }
+
+            while (proximaPosicao < intervaloFim && arrayPalavraAtual[proximaPosicao % 5] !== null) {
+                proximaPosicao++;
+            }
+
+            if (proximaPosicao >= intervaloFim) {
+                proximaPosicao = intervaloInicio;
+                while (proximaPosicao < intervaloInicio + 5 && arrayPalavraAtual[proximaPosicao % 5] !== null) {
+                    proximaPosicao++;
+                }
+            }
+
+            if (proximaPosicao >= intervaloFim || arrayPalavraAtual[proximaPosicao % 5] !== null) {
+                proximaPosicao = Math.min(intervaloFim - 1, espacoDisponivel - 1);
+            }
+
+            espacoDisponivel = proximaPosicao + 1;
+
+            destacarQuadrado(espacoDisponivel);
+        }
     }
-  }
+}
+
 
   function atualizarTeclado(letra, cores) {
     const teclaElemento = document.getElementById(letra);
@@ -87,20 +139,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-function obterCorTeclado(letra) {
-  let cores = ["#3a3a3c", "#3a3a3c", "#3a3a3c", "#3a3a3c"]; 
+  function obterCorTeclado(letra) {
+    let cores = ["#3a3a3c", "#3a3a3c", "#3a3a3c", "#3a3a3c"]; 
   
-  palavras.forEach((palavra, index) => {
-    if (palavra.includes(letra)) {
-      const palavraAtual = getArrayPalavraAtual();
-      const posicao = palavra.indexOf(letra);
-      const acertouPosicao = palavraAtual[posicao] === letra;
-      cores[index] = acertouPosicao ? "#538d4e" : "#b59f3b"; // Verde ou Amarelo
-    }
-  });
+    palavras.forEach((palavra, index) => {
+      if (palavra.includes(letra)) {
+        const palavraAtual = getArrayPalavraAtual();
+        const posicao = palavra.indexOf(letra);
+        const acertouPosicao = palavraAtual[posicao] === letra;
+        cores[index] = acertouPosicao ? "#538d4e" : "#b59f3b"; // Verde ou Amarelo
+      }
+    });
 
-  return cores;
-}
+    return cores;
+  }
 
   function obterCorDoQuadrado(letra, indice, palavra) {
     const palavraCorreta = palavras[palavra];
@@ -147,9 +199,9 @@ function obterCorTeclado(letra) {
       bloquearClique = false;
       return;
     }
-
+  
     const palavraAtual = arrayPalavraAtual.join("");
-
+  
     fetch("/palavraValida", {
       method: "POST",
       headers: {
@@ -167,13 +219,13 @@ function obterCorTeclado(letra) {
         }
         if (data.resposta === true || valido) {
           const primeiroIdLetra = contadorPalavrasAdivinhadas * 5 + 1;
-
+  
           ocorrênciasResposta = [itemCounter(arrayResposta, arrayResposta[0]), itemCounter(arrayResposta, arrayResposta[1]), itemCounter(arrayResposta, arrayResposta[2]), itemCounter(arrayResposta, arrayResposta[3]), itemCounter(arrayResposta, arrayResposta[4])];
           ocorrênciasResposta2 = [itemCounter(arrayResposta2, arrayResposta2[0]), itemCounter(arrayResposta2, arrayResposta2[1]), itemCounter(arrayResposta2, arrayResposta2[2]), itemCounter(arrayResposta2, arrayResposta2[3]), itemCounter(arrayResposta2, arrayResposta2[4])];
           ocorrênciasResposta3 = [itemCounter(arrayResposta3, arrayResposta3[0]), itemCounter(arrayResposta3, arrayResposta3[1]), itemCounter(arrayResposta3, arrayResposta3[2]), itemCounter(arrayResposta3, arrayResposta3[3]), itemCounter(arrayResposta3, arrayResposta3[4])];
           ocorrênciasResposta4 = [itemCounter(arrayResposta4, arrayResposta4[0]), itemCounter(arrayResposta4, arrayResposta4[1]), itemCounter(arrayResposta4, arrayResposta4[2]), itemCounter(arrayResposta4, arrayResposta4[3]), itemCounter(arrayResposta4, arrayResposta4[4])];
           ocorrêciasRespostas = [ocorrênciasResposta, ocorrênciasResposta2, ocorrênciasResposta3, ocorrênciasResposta4];
-
+  
           for (var k = 0; k < quantasPalavras; k++) {
             arrayPalavraAtual.forEach((letra, indice) => {
               const corQuadrado = obterCorDoQuadrado(letra, indice, k);
@@ -182,14 +234,15 @@ function obterCorTeclado(letra) {
               const cores = obterCorTeclado(letra, [palavra, palavra2, palavra3, palavra4]);
               if (elementoLetra != null) {
                 elementoLetra.classList.add("animate__flipInX");
-                elementoLetra.style = `background-color:${corQuadrado};border-color:${corQuadrado}`;
+                elementoLetra.style.backgroundColor = corQuadrado;
+                elementoLetra.style.borderColor = corQuadrado;
                 atualizarTeclado(letra, cores);
               }
             });
           }
-
+  
           contadorPalavrasAdivinhadas += 1;
-
+  
           if (palavrasAdivinhadas.length === 5 + quantasPalavras && !valido) {
             respostas = '';
             for (var i = 0; i < quantasPalavras; i++) {
@@ -197,9 +250,9 @@ function obterCorTeclado(letra) {
             }
             window.alert(`Desculpe, você não tem mais tentativas! A resposta era ${respostas}.`);
           }
-
+  
           palavrasAdivinhadas.push([]);
-
+  
           for (var i = 0; i < quantasPalavras; i++) {
             if (palavraAtual == palavras[i]) {
               acertos += 1;
@@ -211,28 +264,45 @@ function obterCorTeclado(letra) {
               }
             }
           }
+  
+          if (contadorPalavrasAdivinhadas < 5 + quantasPalavras) { 
+            espacoDisponivel = 1 + contadorPalavrasAdivinhadas*5; 
+            destacarQuadrado(espacoDisponivel)
+            document.querySelectorAll('.square').forEach(square => square.classList.remove('current-line'));
+    
+            for (let i = contadorPalavrasAdivinhadas * 5; i < contadorPalavrasAdivinhadas * 5 + 5; i++) {
+              const quadrados = document.querySelectorAll(`#q${i + 1}`);
+              quadrados.forEach(quadrado => quadrado.classList.add('current-line'));
+            }
+          }
         } else {
           alert("Palavra inválida");
         }
-
+  
         if (acertos < quantasPalavras) {
           bloquearClique = false;
         }
       });
   }
+  
 
   function criarQuadrados() {
     const containerQuadroJogo = document.getElementById('board-container');
-
+  
     for (let j = 0; j < quantasPalavras; j++) {
       containerQuadroJogo.innerHTML += `<div id="board" class="board${j}"></div>`;
       let quadroJogo = document.querySelector(".board" + j);
-
+  
       for (let indice = 0; indice < 30 + (quantasPalavras - 1) * 5; indice++) {
         let quadrado = document.createElement("div");
         quadrado.classList.add("square");
         quadrado.classList.add("animate__animated");
         quadrado.setAttribute("id", "q" + parseInt(indice + 1));
+  
+        if (indice < 5) {  
+          quadrado.classList.add("current-line");
+        }
+  
         quadroJogo.appendChild(quadrado);
       }
     }
@@ -240,21 +310,89 @@ function obterCorTeclado(letra) {
 
   function deletarLetra() {
     const arrayPalavraAtual = getArrayPalavraAtual();
-    if (arrayPalavraAtual.length == 0) {
-      return;
+    if (!arrayPalavraAtual || espacoDisponivel <= 0) {
+        return;
     }
 
-    arrayPalavraAtual.pop();
-    palavrasAdivinhadas[palavrasAdivinhadas.length - 1] = arrayPalavraAtual;
+    const intervaloInicio = contadorPalavrasAdivinhadas * 5 + 1;
+    let posicaoDeletar = espacoDisponivel - 1;
 
-    for (var i = 0; i < quantasPalavras; i++) {
-      if (document.querySelector(`.board${i} #q${espacoDisponivel - 1}`) != null) {
-        const ultimaLetraElemento = document.querySelector(`.board${i} #q${espacoDisponivel - 1}`);
-        ultimaLetraElemento.textContent = '';
+    if (arrayPalavraAtual[posicaoDeletar % 5] === null) {
+        if (posicaoDeletar === intervaloInicio - 1) {
+            posicaoDeletar = intervaloInicio + 3;
+            if (arrayPalavraAtual[posicaoDeletar % 5] !== null) {
+                arrayPalavraAtual[posicaoDeletar % 5] = null;
+            }
+        } else {
+            posicaoDeletar--;
+            if (arrayPalavraAtual[posicaoDeletar % 5] !== null) {
+                arrayPalavraAtual[posicaoDeletar % 5] = null;
+            }
+        }
+    } else {
+        arrayPalavraAtual[posicaoDeletar % 5] = null;
+    }
+
+    for (let i = 0; i < quantasPalavras; i++) {
+        const idQuadrado = posicaoDeletar + 1;
+        const elementoLetra = document.querySelector(`.board${i} #q${idQuadrado}`);
+        if (elementoLetra) {
+            elementoLetra.textContent = ''; 
+        }
+    }
+
+    if (posicaoDeletar >= intervaloInicio) {
+        espacoDisponivel = Math.max(intervaloInicio, posicaoDeletar + 1);
+    } else {
+        espacoDisponivel = intervaloInicio;
+    }
+
+    destacarQuadrado(espacoDisponivel);
+}
+
+
+
+
+
+  function destacarQuadrado(idQuadrado) {
+    document.querySelectorAll('.square').forEach(square => {
+      square.classList.remove('highlight');
+    });
+    
+    for (let i = 0; i < quantasPalavras; i++) {
+      const elementoQuadrado = document.querySelector(`.board${i} #q${idQuadrado}`);
+      if (elementoQuadrado) {
+        elementoQuadrado.classList.add('highlight');
       }
     }
-    espacoDisponivel -= 1;
   }
+
+  function moverCursor(direcao) {
+    const arrayPalavraAtual = getArrayPalavraAtual();
+    if (!arrayPalavraAtual || espacoDisponivel <= 0) {
+      return;
+    }
+  
+    const intervaloInicio = contadorPalavrasAdivinhadas * 5 + 1;
+    const intervaloFim = intervaloInicio + 4;
+    let posicaoAtual = espacoDisponivel - 1; 
+  
+    if (direcao === "esquerda") {
+      posicaoAtual--;
+      if (posicaoAtual+2 <= intervaloInicio) {
+        posicaoAtual = intervaloFim - 1;
+      }
+    } else if (direcao === "direita") {
+      posicaoAtual++;
+      if (posicaoAtual+1 > intervaloFim) {
+        posicaoAtual = intervaloInicio -1;
+      }
+    }
+  
+    espacoDisponivel = posicaoAtual + 1;
+    destacarQuadrado(espacoDisponivel);
+  }
+
 
   document.addEventListener("keydown", (evento) => {
     const tecla = evento.key.toLowerCase();
@@ -264,7 +402,7 @@ function obterCorTeclado(letra) {
       return;
     }
 
-    if (botao || tecla === "backspace") {
+    if (botao || tecla === "backspace" || tecla == "arrowright" || tecla == "arrowleft") {
       if (tecla === "enter") {
         enviarPalavra();
         return;
@@ -274,6 +412,17 @@ function obterCorTeclado(letra) {
         deletarLetra();
         return;
       }
+      if (tecla == "arrowleft") {
+        moverCursor("esquerda");
+        return;
+      }
+  
+      if (tecla === "arrowright") {
+        moverCursor("direita");
+        return;
+      }
+
+      
 
       atualizarPalavrasAdivinhadas(tecla);
     }
@@ -304,4 +453,15 @@ function obterCorTeclado(letra) {
       atualizarPalavrasAdivinhadas(letra);
     };
   }
+
+  document.getElementById('board-container').addEventListener('click', (event) => {
+    if (event.target.classList.contains('square')) {
+      const idQuadrado = event.target.getAttribute('id');
+      const numeroQuadrado = parseInt(idQuadrado.replace('q', ''));
+      if(numeroQuadrado > contadorPalavrasAdivinhadas*5 && numeroQuadrado < contadorPalavrasAdivinhadas*5 + 6){
+        espacoDisponivel = numeroQuadrado;
+        destacarQuadrado(espacoDisponivel);
+      }
+    }
+  });
 });

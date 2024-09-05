@@ -63,6 +63,10 @@ header {
   align-items: center;
 }
 
+.highlight {
+  border: 2px solid white;
+}
+
 #keyboard-container {
   min-height: 150px;
   width: 100%;
@@ -76,6 +80,10 @@ header {
   width: 100%;
   margin: 0 auto 8px;
   touch-action: manipulation;
+}
+
+.current-line {
+  cursor: pointer;
 }
 
 .keyboard-row button {
