@@ -66,9 +66,11 @@
   }
 
 .result{
-    grid-column: 1/-1;
-    border: 1px solid white;
-    text-align: center;
+  padding: 1%;
+  margin-top: 10px;
+  grid-column: 1/-1;
+  text-align: center;
+  border-radius: 9px;
 }
 
 .vermelho{
@@ -92,23 +94,24 @@
     grid-template-columns: repeat(4, 4fr);
     padding: 0% calc(20vmax - 120px);
     margin: auto;
-    gap: 5%;
+    width: 20%;
+    justify-content: center;
     transition: 0.55s ease-in-out;
 }
 
 .quadrados button{
-    margin-bottom: 5%;
+  margin: 10px 10px 0px 0px;
     background-color: rgb(68,45,76);
-    border: 1px solid white;
+    border: transparent;
     color: white;
     height: calc(3vmax + 20px);
     transition: all 0.15s ease-in-out;
     font-size: calc(1vmax + 10px);
 }
 
-.quadrados button:hover{
-    cursor: pointer;
-    background-color: rgba(27,13,33,1);
+.quadrados .button{
+  width: calc(5vmax + 50px);
+  border-radius: 7px;
 }
 
 .quadrados button:active{
@@ -117,4 +120,11 @@
 
 .quadrados p{
     font-size: calc(0.8vmax + 12px);
+}
+
+@media (min-width: 800px) {
+  .quadrados button:hover{
+    cursor: pointer;
+    background-color: rgba(27,13,33,1);
+}
 }

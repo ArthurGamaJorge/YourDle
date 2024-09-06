@@ -106,7 +106,11 @@ let selecionar = async botão =>{
     }
 
     if(verde.itens.length == 0 && azul.itens.length == 0 && amarelo.itens.length == 0 && vermelho.itens.length == 0){
-      alert("Parabéns você ganhou")
+      document.querySelector('.quadrados').style.width = "unset"
+      animacaoVitoria()
+      setTimeout(() => {
+        document.getElementById("divVitoria").classList.add('abriu');
+    }, 0);
     }
   }
 }

@@ -430,6 +430,7 @@ a:visited {
 #sairButton{
     position: absolute;
     right: 1%;
+    display: none;
 }
 
 #sairButton img{

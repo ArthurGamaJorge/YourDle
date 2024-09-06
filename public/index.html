@@ -128,10 +128,17 @@
 
     <button onclick="sair(); event.stopPropagation()" id="sairButton"> <img src="Images/sair.png"> </button>
 
-    <div id="divInfo" class="DivSair" style="display: none" onclick="event.stopPropagation()">
-        <h2><img src="Images/sair.png"> &nbsp; Deseja realmente sair?</h2> <br> <hr> <br> <br>
-        <button onclick="confirmarSaida()" id="ConfirmarSaidaButton">Sair</button>
+
+    <div id="divInfo" class="DivSair popup" style="display: none" onclick="event.stopPropagation()">
+        <h2><img src="Images/sair.png"> <span id="titlePopup">Deseja realmente sair?</span></h2> <br>
+        <div class="resultado">
+            <button onclick="confirmarSaida()" style="width: 50%">Sair</button>
+        </div>
     </div>
+
+    <div id="status-bar" style="margin-top: 10px">
+        Texto
+      </div>
 
 
     <script src="scripts/jogos.js"></script>

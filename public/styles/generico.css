@@ -24,7 +24,11 @@ hr{
     display: block !important;
 }
 
-#divInfo {
+.abriu, .abrir{
+    display: flex !important;
+}
+
+.popup {
     border: 2px solid rgb(207, 177, 218);
     width: 40vw;
     border-radius: 5%;
@@ -37,13 +41,73 @@ hr{
     font-size: calc(1vmax + 10px);
 }
 
-#divInfo img{
+.popup img{
     width: calc(2vmax + 10px);
 }
 
-#divInfo h2{
+.popup h2{
     align-items: center;
     display: flex;
+}
+
+#titlePopup{
+    margin-left: 15px;
+}
+
+.resultado{
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 2% 1%;
+}
+
+.resultado h2{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.resultado button{
+    margin-top: 20px;
+    background-color: rgb(68,45,76);
+    color: white;
+    font-size: calc(1vmax + 10px);
+    padding: 2%;
+    border-radius: 20px;
+    border: transparent;
+}
+
+#palavrasCertas{
+    margin-top: 20px;
+    text-align: center;
+}
+
+#status-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: rgb(68,45,76); 
+    font-size: calc(0.9vmax + 15px);
+    color: white;
+    padding: 10px;
+    text-align: center;
+    transform: translateY(-100%); 
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    opacity: 0; 
+  }
+
+  #status-bar.show {
+    transform: translateY(0); 
+    opacity: 1; 
+  }
+  
+  #status-bar.hide {
+    transform: translateY(-100%); 
+    opacity: 0; 
+  }
+
+  #status-bar.reset {
+    animation: none; /* Remove any previous animation */
 }
 
 .box{
@@ -82,3 +146,9 @@ hr{
     animation: none !important;
     transition: none !important;
   }
+
+@media (max-width: 800px) {
+    .popup{
+        width: 70%;
+    }
+}

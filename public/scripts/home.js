@@ -80,7 +80,7 @@ let registrar = () =>{
         if(data.resposta != "sucesso"){
             alert(data.resposta)
         } else{
-            alert("Registro feito com sucesso")
+            showStatusBar("Registro feito com sucesso", 3000);  
             localStorage.setItem("login", JSON.stringify(infoRegistro))
             fecharBox("All")
             document.getElementById('divCriarPost').classList.toggle("aberto")
@@ -105,13 +105,13 @@ let logar = infoLogin =>{
         body:JSON.stringify(infoLogin)
     }).then(response => response.json()) 
       .then(data => {
-        console.log("Login foi feito")
         if(data.resposta != "sucesso"){
-            alert("Informações incorretas")
+            showStatusBar("Informações incorretas no login", 2000);  
         } else{
             localStorage.setItem("login", JSON.stringify(data.info))
             loginInformations = JSON.parse(localStorage.getItem("login"))
             fecharBox("All")
+            document.querySelector('#sairButton').style = "display: block"
         }
     })
 }
@@ -120,7 +120,7 @@ let mudarSeção = ação =>{
     if(ação == "avançar"){
         titulo = document.getElementById('titulo').value
         if(titulo == ""){
-            alert("Adicione um título primeiro")
+            showStatusBar("Adicione um título primeiro", 3000);  
             return
         }
     
@@ -178,14 +178,14 @@ let publicar = Tipo =>{
 }
 
 let sair = () =>{
-    fecharBox(".DivSair")
-    document.querySelector('.DivSair').classList.toggle("aberto")
+    document.querySelector('.DivSair').classList.add("aberto")
 }
 
 let confirmarSaida  = () =>{
     loginInformations = null
     localStorage.setItem("login", null)
     fecharBox("All")
+    document.querySelector('#sairButton').style = "display: none"
 }
 
 function handleEnterKey(event) {

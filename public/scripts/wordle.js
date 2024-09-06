@@ -195,7 +195,6 @@ document.addEventListener("DOMContentLoaded", () => {
     bloquearClique = true;
     arrayPalavraAtual = getArrayPalavraAtual();
     if (arrayPalavraAtual.length !== 5) {
-      window.alert("A palavra deve ter 5 letras");
       bloquearClique = false;
       return;
     }
@@ -248,7 +247,8 @@ document.addEventListener("DOMContentLoaded", () => {
             for (var i = 0; i < quantasPalavras; i++) {
               respostas += palavras[i] + ' ';
             }
-            window.alert(`Desculpe, você não tem mais tentativas! A resposta era ${respostas}.`);
+            document.getElementById('palavrasCertas').textContent = `Você não tem mais tentativas, a resposta era ${respostas}`
+            mostrarDerrota()
           }
   
           palavrasAdivinhadas.push([]);
@@ -259,10 +259,11 @@ document.addEventListener("DOMContentLoaded", () => {
               boards = document.querySelectorAll('#board');
               boards[i].classList.remove('board' + i);
               if (acertos == quantasPalavras) {
-                window.alert("Parabéns, você ganhou");
+                animacaoVitoria()
                 bloquearClique = true;
               }
             }
+              
           }
   
           if (contadorPalavrasAdivinhadas < 5 + quantasPalavras) { 
@@ -276,7 +277,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
           }
         } else {
-          alert("Palavra inválida");
+          showStatusBar("Palavra inválida", 2000);  
         }
   
         if (acertos < quantasPalavras) {
