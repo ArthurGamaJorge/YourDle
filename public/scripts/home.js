@@ -81,7 +81,8 @@ let registrar = () =>{
             alert(data.resposta)
         } else{
             showStatusBar("Registro feito com sucesso", 3000);  
-            localStorage.setItem("login", JSON.stringify(infoRegistro))
+            localStorage.setItem("login", JSON.stringify(data.info))
+            loginInformations = data.info; 
             fecharBox("All")
             document.getElementById('divCriarPost').classList.toggle("aberto")
         }
